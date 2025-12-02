@@ -127,7 +127,7 @@ function App() {
   return (
     <div className="min-h-screen pb-24 max-w-lg mx-auto bg-gray-50 sm:border-x sm:border-gray-200">
       <header className="p-6 bg-white sticky top-0 z-10 border-b border-gray-100 flex justify-between items-center">
-        <h1 className="text-2xl font-extrabold text-gray-900">Мои подписки</h1>
+        <h1 className="text-2xl font-extrabold text-gray-900">Мои проверки</h1>
         <Bell size={20} className="text-gray-400" />
       </header>
 
