@@ -1,0 +1,45 @@
+name: Deploy to VPS
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            # 1. Скачиваем код
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # 2. Устанавливаем Node.js
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            # 3. Собираем проект
+            - name: Install and Build
+              run: |
+                  npm ci
+                  npm run build
+
+            # 4. Настраиваем SSH-агент (безопасно загружаем ключ)
+            - name: Setup SSH
+              uses: webfactory/ssh-agent@v0.9.0
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            # 5. Добавляем сервер в список доверенных (чтобы не было ошибки "Host verification failed")
+            - name: Add host key
+              run: |
+                  mkdir -p ~/.ssh
+                  ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+            # 6. Деплоим через rsync с удалением старых файлов
+            - name: Deploy with rsync
+              run: |
+                  rsync -avz --delete dist/ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/tracker
