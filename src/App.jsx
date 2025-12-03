@@ -6,100 +6,103 @@ import SubscriptionCard from './components/SubscriptionCard';
 import DataBackup from './components/DataBackup';
 
 function App() {
-  // Загружаем данные
   const [subscriptions, setSubscriptions] = useState(() => {
-    const saved = localStorage.getItem('subs_data');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('subs_data');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
   });
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSub, setEditingSub] = useState(null);
 
-  // Сохраняем данные при изменении
   useEffect(() => {
     localStorage.setItem('subs_data', JSON.stringify(subscriptions));
   }, [subscriptions]);
 
-  // --- ЛОГИКА УВЕДОМЛЕНИЙ (Новая) ---
+  // --- БЕЗОПАСНАЯ ЛОГИКА УВЕДОМЛЕНИЙ ---
   useEffect(() => {
-    // 1. Проверяем права
     if (Notification.permission !== "granted") {
       Notification.requestPermission();
     }
 
     const checkAndNotify = () => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      
-      // Проверяем: Наступило ли 9 вечера (21:00)?
-      if (currentHour < 23) return;
+      try {
+        const now = new Date();
+        const currentHour = now.getHours();
+        
+        if (currentHour < 21) return;
 
-      // Проверяем: Отправляли ли мы уже уведомление СЕГОДНЯ?
-      const lastNotifiedStr = localStorage.getItem('last_notification_date');
-      const todayStr = now.toDateString(); // формат "Thu Nov 21 2025"
+        const lastNotifiedStr = localStorage.getItem('last_notification_date');
+        const todayStr = now.toDateString(); 
 
-      if (lastNotifiedStr === todayStr) {
-        return; // Сегодня уже напоминали, выходим
-      }
+        if (lastNotifiedStr === todayStr) return;
 
-      // Если 21:00+ и сегодня не напоминали, ищем подписки
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      tomorrow.setHours(0, 0, 0, 0); // Сбрасываем время для точного сравнения дат
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
 
-      const subsDueTomorrow = subscriptions.filter(sub => {
-        if (sub.status === 'Paused') return false;
+        const subsDueTomorrow = subscriptions.filter(sub => {
+          if (sub.status === 'Paused') return false;
 
-        // Расчет следующей даты (та же логика, что и раньше)
-        const start = new Date(sub.startDate);
-        let next = new Date(start);
-        // Важно: сравниваем с "сейчас", чтобы найти актуальную следующую дату
-        while (next < now) {
-          if (sub.periodUnit === 'month') next.setMonth(next.getMonth() + parseInt(sub.periodQty));
-          else if (sub.periodUnit === 'year') next.setFullYear(next.getFullYear() + parseInt(sub.periodQty));
-          else if (sub.periodUnit === 'week') next.setDate(next.getDate() + (parseInt(sub.periodQty) * 7));
-          else next.setDate(next.getDate() + parseInt(sub.periodQty));
-        }
+          try {
+            const start = new Date(sub.startDate);
+            if (isNaN(start.getTime())) return false;
+            
+            let next = new Date(start);
+            // ЗАЩИТА ОТ ЗАВИСАНИЯ ЗДЕСЬ
+            const qty = Math.max(1, parseInt(sub.periodQty) || 1);
+            let safety = 0;
 
-        // Проверяем, совпадает ли дата с "завтра"
-        return (
-          next.getDate() === tomorrow.getDate() &&
-          next.getMonth() === tomorrow.getMonth() &&
-          next.getFullYear() === tomorrow.getFullYear()
-        );
-      });
+            while (next < now && safety < 1000) {
+              if (sub.periodUnit === 'month') next.setMonth(next.getMonth() + qty);
+              else if (sub.periodUnit === 'year') next.setFullYear(next.getFullYear() + qty);
+              else if (sub.periodUnit === 'week') next.setDate(next.getDate() + (qty * 7));
+              else next.setDate(next.getDate() + qty);
+              safety++;
+            }
 
-      // Если нашли такие подписки — отправляем уведомление
-      if (subsDueTomorrow.length > 0) {
-        const names = subsDueTomorrow.map(s => s.name).join(', ');
-        new Notification("Скоро оплата", {
-          body: `Завтра списание: ${names}. Проверьте баланс!`,
-          icon: '/pwa-192x192.png' // Иконка (если есть)
+            return (
+              next.getDate() === tomorrow.getDate() &&
+              next.getMonth() === tomorrow.getMonth() &&
+              next.getFullYear() === tomorrow.getFullYear()
+            );
+          } catch (e) {
+            return false;
+          }
         });
-      }
 
-      // ВАЖНО: Запоминаем, что сегодня мы проверку выполнили (даже если список пуст)
-      // Это предотвратит спам при перезагрузке страницы
-      localStorage.setItem('last_notification_date', todayStr);
+        if (subsDueTomorrow.length > 0) {
+          const names = subsDueTomorrow.map(s => s.name).join(', ');
+          new Notification("Скоро оплата", {
+            body: `Завтра списание: ${names}. Проверьте баланс!`,
+            icon: '/pwa-192x192.png'
+          });
+        }
+        localStorage.setItem('last_notification_date', todayStr);
+      } catch (error) {
+        console.error("Ошибка в уведомлениях:", error);
+      }
     };
 
-    // Запускаем проверку сразу при загрузке (вдруг пользователь открыл в 21:30)
     checkAndNotify();
-
-    // И запускаем таймер, который проверяет время каждую минуту 
-    // (на случай, если приложение открыто и на часах стукнуло 21:00)
     const intervalId = setInterval(checkAndNotify, 60000); 
-
     return () => clearInterval(intervalId);
-  }, [subscriptions]); // Зависит от подписок, чтобы данные были свежими
-
-  // --- ОСТАЛЬНОЙ КОД БЕЗ ИЗМЕНЕНИЙ ---
+  }, [subscriptions]);
 
   const handleAddOrUpdate = (subData) => {
+    // Дополнительная валидация перед сохранением
+    const cleanData = {
+        ...subData,
+        periodQty: Math.max(1, parseInt(subData.periodQty) || 1)
+    };
+
     if (editingSub) {
-      setSubscriptions(prev => prev.map(s => s.id === subData.id ? subData : s));
+      setSubscriptions(prev => prev.map(s => s.id === subData.id ? cleanData : s));
     } else {
-      setSubscriptions(prev => [...prev, subData]);
+      setSubscriptions(prev => [...prev, cleanData]);
     }
     setEditingSub(null);
   };
@@ -127,7 +130,7 @@ function App() {
   return (
     <div className="min-h-screen pb-24 max-w-lg mx-auto bg-gray-50 sm:border-x sm:border-gray-200">
       <header className="p-6 bg-white sticky top-0 z-10 border-b border-gray-100 flex justify-between items-center">
-        <h1 className="text-2xl font-extrabold text-gray-900">Мои проверки</h1>
+        <h1 className="text-2xl font-extrabold text-gray-900">Мои подписки</h1>
         <Bell size={20} className="text-gray-400" />
       </header>
 

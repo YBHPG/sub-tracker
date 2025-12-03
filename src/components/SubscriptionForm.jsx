@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload } from 'lucide-react';
+import { X, Upload, AlertCircle } from 'lucide-react';
 
 const SubscriptionForm = ({ onClose, onSave, initialData }) => {
-  const [formData, setFormData] = useState({
+  // Инициализация (ленивая)
+  const [formData, setFormData] = useState(() => ({
     id: Date.now(),
     name: '',
     cost: '',
@@ -13,7 +14,9 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
     comment: '',
     logo: null,
     status: 'Active'
-  });
+  }));
+
+  const [touched, setTouched] = useState({});
 
   useEffect(() => {
     if (initialData) setFormData(initialData);
@@ -30,11 +33,84 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    
+    setTouched(prev => ({ ...prev, [name]: true }));
+
+    // Логика авто-исправления для periodQty (как делали раньше)
+    if (name === 'periodQty') {
+      if (!value || parseInt(value) < 1) {
+        setFormData(prev => ({ ...prev, periodQty: 1 }));
+      }
+    }
+  };
+
+  // --- ОБНОВЛЕННАЯ ЛОГИКА ОШИБОК ---
+  const getErrorType = (field) => {
+    // Если поле еще не трогали - ошибок нет
+    if (!touched[field]) return null;
+
+    const value = formData[field];
+
+    // Специфичная проверка для Стоимости
+    if (field === 'cost') {
+      if (!value) return 'empty'; // Пустое
+      if (parseFloat(value) <= 0) return 'invalid_number'; // Меньше или равно 0
+      return null;
+    }
+
+    // Для остальных полей (просто проверка на пустоту)
+    if (!value) return 'empty';
+    
+    return null;
+  };
+
+  // Валидация всей формы для кнопки (Стоимость должна быть строго > 0)
+  const isFormValid = 
+    formData.name && 
+    formData.cost && parseFloat(formData.cost) > 0 && 
+    formData.startDate;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
-    onClose();
+    if (isFormValid) {
+      const finalData = {
+        ...formData,
+        periodQty: formData.periodQty || 1 
+      };
+      onSave(finalData);
+      onClose();
+    }
   };
+
+  // Компонент сообщения об ошибке
+  const ErrorMessage = ({ type }) => {
+    if (!type) return null;
+    
+    let text = "Поле обязательно для заполнения";
+    if (type === 'invalid_number') text = "Стоимость должна быть больше 0";
+
+    return (
+      <div className="flex items-center gap-1 text-red-500 text-xs mt-1 animate-pulse">
+        <AlertCircle size={12} />
+        <span>{text}</span>
+      </div>
+    );
+  };
+
+  const getInputClass = (hasError) => `
+    w-full p-3 border rounded-xl outline-none transition-colors
+    ${hasError 
+      ? 'border-red-500 focus:ring-2 focus:ring-red-200 bg-red-50' 
+      : 'border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+    }
+  `;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -43,19 +119,19 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
           <h2 className="text-xl font-bold text-gray-800">
             {initialData ? 'Редактировать' : 'Новая подписка'}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-red-500">
+          <button onClick={onClose} className="text-gray-500 hover:text-red-500 transition">
             <X size={24} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           {/* Логотип */}
           <div className="flex justify-center mb-4">
-            <label className="cursor-pointer flex flex-col items-center gap-2 text-sm text-blue-600">
+            <label className="cursor-pointer flex flex-col items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition">
               {formData.logo ? (
-                <img src={formData.logo} alt="Logo" className="w-16 h-16 rounded-full object-cover border" />
+                <img src={formData.logo} alt="Logo" className="w-16 h-16 rounded-full object-cover border shadow-sm" />
               ) : (
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center border-2 border-dashed border-gray-300">
+                <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-blue-400 transition">
                   <Upload size={24} className="text-gray-400" />
                 </div>
               )}
@@ -64,36 +140,45 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
             </label>
           </div>
 
+          {/* Название */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Название</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Название <span className="text-red-500">*</span></label>
             <input 
-              required
+              name="name"
               type="text" 
               value={formData.name}
-              onChange={e => setFormData({...formData, name: e.target.value})}
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={getInputClass(getErrorType('name'))}
               placeholder="Например, Netflix"
             />
+            <ErrorMessage type={getErrorType('name')} />
           </div>
 
+          {/* Стоимость и Валюта */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Стоимость</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Стоимость <span className="text-red-500">*</span></label>
               <input 
-                required
+                name="cost"
                 type="number" 
                 value={formData.cost}
-                onChange={e => setFormData({...formData, cost: e.target.value})}
-                className="w-full p-3 border border-gray-200 rounded-xl"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={getInputClass(getErrorType('cost'))}
                 placeholder="0"
+                min="0.01" 
+                step="0.01"
               />
+              <ErrorMessage type={getErrorType('cost')} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Валюта</label>
               <select 
+                name="currency"
                 value={formData.currency}
-                onChange={e => setFormData({...formData, currency: e.target.value})}
-                className="w-full p-3 border border-gray-200 rounded-xl bg-white"
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
                 <option value="RUB">₽ (RUB)</option>
                 <option value="USD">$ (USD)</option>
@@ -102,20 +187,24 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
             </div>
           </div>
 
+          {/* Период */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Списание каждые</label>
             <div className="flex gap-2">
               <input 
+                name="periodQty"
                 type="number" 
                 min="1"
                 value={formData.periodQty}
-                onChange={e => setFormData({...formData, periodQty: e.target.value})}
-                className="w-20 p-3 border border-gray-200 rounded-xl"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="w-20 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
               />
               <select 
+                name="periodUnit"
                 value={formData.periodUnit}
-                onChange={e => setFormData({...formData, periodUnit: e.target.value})}
-                className="flex-1 p-3 border border-gray-200 rounded-xl bg-white"
+                onChange={handleChange}
+                className="flex-1 p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
                 <option value="day">Дней</option>
                 <option value="week">Недель</option>
@@ -125,18 +214,30 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
             </div>
           </div>
 
+          {/* Дата */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Первое списание</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Первое списание <span className="text-red-500">*</span></label>
             <input 
+              name="startDate"
               type="date" 
-              required
               value={formData.startDate}
-              onChange={e => setFormData({...formData, startDate: e.target.value})}
-              className="w-full p-3 border border-gray-200 rounded-xl bg-white"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={getInputClass(getErrorType('startDate'))}
             />
+            <ErrorMessage type={getErrorType('startDate')} />
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+          {/* Кнопка */}
+          <button 
+            type="submit" 
+            disabled={!isFormValid}
+            className={`w-full py-3 rounded-xl font-bold transition flex items-center justify-center gap-2
+              ${isFormValid 
+                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl' 
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+          >
             Сохранить
           </button>
         </form>
