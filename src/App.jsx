@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Bell } from 'lucide-react';
+import { Plus, Bell, Search, X } from 'lucide-react';
 import Analytics from './components/Analytics';
 import SubscriptionForm from './components/SubscriptionForm';
 import SubscriptionCard from './components/SubscriptionCard';
 import DataBackup from './components/DataBackup';
+import PopularSubscriptions from './components/PopularSubscriptions';
 
 function App() {
   const [subscriptions, setSubscriptions] = useState(() => {
@@ -17,6 +18,7 @@ function App() {
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSub, setEditingSub] = useState(null);
+  const [isPopularSubsOpen, setIsPopularSubsOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('subs_data', JSON.stringify(subscriptions));
@@ -99,10 +101,10 @@ function App() {
         periodQty: Math.max(1, parseInt(subData.periodQty) || 1)
     };
 
-    if (editingSub) {
+    if (editingSub && editingSub.id) {
       setSubscriptions(prev => prev.map(s => s.id === subData.id ? cleanData : s));
     } else {
-      setSubscriptions(prev => [...prev, cleanData]);
+      setSubscriptions(prev => [...prev, { ...cleanData, id: Date.now() }]);
     }
     setEditingSub(null);
   };
@@ -124,6 +126,18 @@ function App() {
 
   const openEdit = (sub) => {
     setEditingSub(sub);
+    setIsFormOpen(true);
+  };
+
+  const handleSelectPopular = (sub) => {
+    setEditingSub({ ...sub, logo: sub.icon });
+    setIsPopularSubsOpen(false);
+    setIsFormOpen(true);
+  };
+
+  const handleCustomSubscription = () => {
+    setEditingSub(null);
+    setIsPopularSubsOpen(false);
     setIsFormOpen(true);
   };
 
@@ -165,7 +179,7 @@ function App() {
       </main>
 
       <button 
-        onClick={() => { setEditingSub(null); setIsFormOpen(true); }}
+        onClick={() => { setEditingSub(null); setIsPopularSubsOpen(true); }}
         className="fixed bottom-6 right-6 w-14 h-14 bg-black text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition z-20"
       >
         <Plus size={32} />
@@ -173,13 +187,31 @@ function App() {
 
       {isFormOpen && (
         <SubscriptionForm 
-          onClose={() => setIsFormOpen(false)} 
+          onClose={() => {
+            setIsFormOpen(false);
+            setEditingSub(null);
+          }} 
           onSave={handleAddOrUpdate}
           initialData={editingSub}
         />
       )}
+
+      {isPopularSubsOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">Выбрать популярную подписку</h3>
+              <button onClick={() => setIsPopularSubsOpen(false)} className="text-gray-500 hover:text-red-500 transition">
+                <X size={24} />
+              </button>
+            </div>
+            <PopularSubscriptions onSelect={handleSelectPopular} onCustom={handleCustomSubscription} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
 export default App;

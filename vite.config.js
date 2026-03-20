@@ -4,6 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  build: {
+    assetsInlineLimit: 0, // Отключаем инлайн мелких файлов, чтобы все иконки сохранялись отдельно
+  },
   plugins: [
     react(),
     tailwindcss(),

@@ -1,26 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { X, Upload, AlertCircle } from 'lucide-react';
 
+const ErrorMessage = ({ type }) => {
+  if (!type) return null;
+  
+  let text = "Поле обязательно для заполнения";
+  if (type === 'invalid_number') text = "Стоимость должна быть больше 0";
+
+  return (
+    <div className="flex items-center gap-1 text-red-500 text-xs mt-1 animate-pulse">
+      <AlertCircle size={12} />
+      <span>{text}</span>
+    </div>
+  );
+};
+
 const SubscriptionForm = ({ onClose, onSave, initialData }) => {
-  // Инициализация (ленивая)
-  const [formData, setFormData] = useState(() => ({
-    id: Date.now(),
-    name: '',
-    cost: '',
-    currency: 'RUB',
-    periodQty: 1,
-    periodUnit: 'month',
-    startDate: new Date().toISOString().substr(0, 10),
-    comment: '',
-    logo: null,
-    status: 'Active'
-  }));
+  // Инициализация формы с подмешиванием значений по умолчанию
+  const [formData, setFormData] = useState(() => {
+    const defaultData = {
+      id: null,
+      name: '',
+      cost: '',
+      currency: 'RUB',
+      periodQty: 1,
+      periodUnit: 'month',
+      startDate: new Date().toISOString().substr(0, 10),
+      comment: '',
+      logo: null,
+      status: 'Active'
+    };
+
+    if (initialData) {
+      return { ...defaultData, ...initialData, logo: initialData.logo || initialData.icon || null };
+    }
+    return defaultData;
+  });
 
   const [touched, setTouched] = useState({});
-
-  useEffect(() => {
-    if (initialData) setFormData(initialData);
-  }, [initialData]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -89,21 +106,6 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
     }
   };
 
-  // Компонент сообщения об ошибке
-  const ErrorMessage = ({ type }) => {
-    if (!type) return null;
-    
-    let text = "Поле обязательно для заполнения";
-    if (type === 'invalid_number') text = "Стоимость должна быть больше 0";
-
-    return (
-      <div className="flex items-center gap-1 text-red-500 text-xs mt-1 animate-pulse">
-        <AlertCircle size={12} />
-        <span>{text}</span>
-      </div>
-    );
-  };
-
   const getInputClass = (hasError) => `
     w-full p-3 border rounded-xl outline-none transition-colors
     ${hasError 
@@ -117,7 +119,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
       <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-800">
-            {initialData ? 'Редактировать' : 'Новая подписка'}
+            {initialData && initialData.name ? 'Редактировать' : 'Новая подписка'}
           </h2>
           <button onClick={onClose} className="text-gray-500 hover:text-red-500 transition">
             <X size={24} />

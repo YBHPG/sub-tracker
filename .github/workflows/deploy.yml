@@ -18,7 +18,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20"
+                  node-version: "22"
                   cache: "npm"
 
             # 3. Собираем проект
@@ -43,3 +43,17 @@ jobs:
             - name: Deploy with rsync
               run: |
                   rsync -avz --delete dist/ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/tracker
+                  ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "mkdir -p ~/services/sub_tracker"
+                  rsync -avz --delete dist/ ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/services/sub_tracker/dist/
+                  rsync -avz Dockerfile ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/services/sub_tracker/Dockerfile
+
+            # 7. Перезапускаем Docker-контейнер на сервере
+            - name: Restart Docker container
+              run: |
+                  ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} '
+                      cd ~/services/sub_tracker
+                      docker build -t sub-tracker-app .
+                      docker stop sub-tracker || true
+                      docker rm sub-tracker || true
+                      docker run -d -p 8080:80 --name sub-tracker --restart unless-stopped sub-tracker-app
+                  '
