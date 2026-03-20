@@ -1,8 +1,22 @@
-# Раздача готовой статики через Nginx
+# Этап 1: Сборка приложения
+FROM node:22-alpine AS builder
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем файлы зависимостей и устанавливаем их
+COPY package*.json ./
+RUN npm ci
+
+# Копируем исходный код и собираем проект
+COPY . .
+RUN npm run build
+
+# Этап 2: Раздача статики через Nginx
 FROM nginx:alpine
 
-# Копируем локально собранную папку dist в директорию Nginx
-COPY dist /usr/share/nginx/html
+# Копируем собранные файлы из первого этапа в директорию Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Открываем 80 порт
 EXPOSE 80
