@@ -107,21 +107,21 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
   };
 
   const getInputClass = (hasError) => `
-    w-full p-3 border rounded-xl outline-none transition-colors
+    w-full p-3 border rounded-xl outline-none transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white
     ${hasError 
-      ? 'border-red-500 focus:ring-2 focus:ring-red-200 bg-red-50' 
-      : 'border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+      ? 'border-red-500 focus:ring-2 focus:ring-red-200 bg-red-50 dark:bg-red-900/30' 
+      : 'border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
     }
   `;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white">
             {initialData && initialData.name ? 'Редактировать' : 'Новая подписка'}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-red-500 transition">
+          <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
             <X size={24} />
           </button>
         </div>
@@ -129,11 +129,11 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           {/* Логотип */}
           <div className="flex justify-center mb-4">
-            <label className="cursor-pointer flex flex-col items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition">
+            <label className="cursor-pointer flex flex-col items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition">
               {formData.logo ? (
-                <img src={formData.logo} alt="Logo" className="w-16 h-16 rounded-full object-cover border shadow-sm" />
+                <img src={formData.logo} alt="Logo" className="w-16 h-16 rounded-full object-cover border dark:border-gray-600 shadow-sm" />
               ) : (
-                <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center border-2 border-dashed border-gray-300 hover:border-blue-400 transition">
+                <div className="w-16 h-16 bg-gray-50 dark:bg-gray-700 rounded-full flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-500 hover:border-blue-400 dark:hover:border-blue-400 transition">
                   <Upload size={24} className="text-gray-400" />
                 </div>
               )}
@@ -144,7 +144,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
           {/* Название */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Название <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Название <span className="text-red-500">*</span></label>
             <input 
               name="name"
               type="text" 
@@ -160,7 +160,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
           {/* Стоимость и Валюта */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Стоимость <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Стоимость <span className="text-red-500">*</span></label>
               <input 
                 name="cost"
                 type="number" 
@@ -175,12 +175,12 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
               <ErrorMessage type={getErrorType('cost')} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Валюта</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Валюта</label>
               <select 
                 name="currency"
                 value={formData.currency}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
                 <option value="RUB">₽ (RUB)</option>
                 <option value="USD">$ (USD)</option>
@@ -191,7 +191,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
           {/* Период */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Списание каждые</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Списание каждые</label>
             <div className="flex gap-2">
               <input 
                 name="periodQty"
@@ -200,13 +200,13 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
                 value={formData.periodQty}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="w-20 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-20 p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               />
               <select 
                 name="periodUnit"
                 value={formData.periodUnit}
                 onChange={handleChange}
-                className="flex-1 p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+                className="flex-1 p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
                 <option value="day">Дней</option>
                 <option value="week">Недель</option>
@@ -218,7 +218,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
           {/* Дата */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Первое списание <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Первое списание <span className="text-red-500">*</span></label>
             <input 
               name="startDate"
               type="date" 
@@ -237,7 +237,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
             className={`w-full py-3 rounded-xl font-bold transition flex items-center justify-center gap-2
               ${isFormValid 
                 ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl' 
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
           >
             Сохранить

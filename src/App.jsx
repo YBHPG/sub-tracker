@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Bell, Search, X } from 'lucide-react';
+import { Plus, Bell, Search, X, Settings } from 'lucide-react';
 import Analytics from './components/Analytics';
 import SubscriptionForm from './components/SubscriptionForm';
 import SubscriptionCard from './components/SubscriptionCard';
-import DataBackup from './components/DataBackup';
+import SettingsModal from './components/SettingsModal';
 import PopularSubscriptions from './components/PopularSubscriptions';
 
 function App() {
@@ -19,10 +19,39 @@ function App() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSub, setEditingSub] = useState(null);
   const [isPopularSubsOpen, setIsPopularSubsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('app_theme') || 'system';
+  });
 
   useEffect(() => {
     localStorage.setItem('subs_data', JSON.stringify(subscriptions));
   }, [subscriptions]);
+
+  useEffect(() => {
+    localStorage.setItem('app_theme', theme);
+    
+    const root = window.document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const applyTheme = () => {
+      if (theme === 'system') {
+        root.classList.toggle('dark', mediaQuery.matches);
+        root.style.colorScheme = mediaQuery.matches ? 'dark' : 'light';
+      } else {
+        root.classList.toggle('dark', theme === 'dark');
+        root.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+      }
+    };
+
+    applyTheme();
+
+    if (theme === 'system') {
+      mediaQuery.addEventListener('change', applyTheme);
+      return () => mediaQuery.removeEventListener('change', applyTheme);
+    }
+  }, [theme]);
 
   // --- БЕЗОПАСНАЯ ЛОГИКА УВЕДОМЛЕНИЙ ---
   useEffect(() => {
@@ -142,21 +171,26 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen pb-24 max-w-lg mx-auto bg-gray-50 sm:border-x sm:border-gray-200">
-      <header className="p-6 bg-white sticky top-0 z-10 border-b border-gray-100 flex justify-between items-center">
-        <h1 className="text-2xl font-extrabold text-gray-900">Мои подписки</h1>
-        <Bell size={20} className="text-gray-400" />
+    <div className="min-h-screen pb-24 max-w-lg mx-auto bg-gray-50 dark:bg-gray-900 sm:border-x sm:border-gray-200 dark:sm:border-gray-800 transition-colors duration-300">
+      <header className="p-6 bg-white dark:bg-gray-900 sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center transition-colors duration-300">
+        <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">Мои подписки</h1>
+        <div className="flex items-center gap-4">
+          <button onClick={() => setIsSettingsOpen(true)} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition">
+            <Settings size={20} />
+          </button>
+          <Bell size={20} className="text-gray-400 dark:text-gray-500" />
+        </div>
       </header>
 
       <main className="p-4">
         <Analytics subscriptions={subscriptions} />
 
         <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-gray-700">Список ({subscriptions.length})</h2>
+          <h2 className="font-bold text-gray-700 dark:text-gray-200">Список ({subscriptions.length})</h2>
         </div>
 
         {subscriptions.length === 0 ? (
-          <div className="text-center text-gray-400 mt-10">
+          <div className="text-center text-gray-400 dark:text-gray-500 mt-10">
             <p>Нет активных подписок</p>
             <p className="text-sm">Нажмите +, чтобы добавить</p>
           </div>
@@ -172,15 +206,11 @@ function App() {
           ))
         )}
 
-        <DataBackup 
-          subscriptions={subscriptions} 
-          onImport={(data) => setSubscriptions(data)} 
-        />
       </main>
 
       <button 
         onClick={() => { setEditingSub(null); setIsPopularSubsOpen(true); }}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-black text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition z-20"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-black dark:bg-white text-white dark:text-black rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition z-20"
       >
         <Plus size={32} />
       </button>
@@ -198,16 +228,26 @@ function App() {
 
       {isPopularSubsOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">Выбрать популярную подписку</h3>
-              <button onClick={() => setIsPopularSubsOpen(false)} className="text-gray-500 hover:text-red-500 transition">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Выбрать популярную подписку</h3>
+              <button onClick={() => setIsPopularSubsOpen(false)} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
                 <X size={24} />
               </button>
             </div>
             <PopularSubscriptions onSelect={handleSelectPopular} onCustom={handleCustomSubscription} />
           </div>
         </div>
+      )}
+
+      {isSettingsOpen && (
+        <SettingsModal 
+          onClose={() => setIsSettingsOpen(false)} 
+          subscriptions={subscriptions} 
+          onImport={(data) => setSubscriptions(data)} 
+          theme={theme}
+          setTheme={setTheme}
+        />
       )}
     </div>
   );
