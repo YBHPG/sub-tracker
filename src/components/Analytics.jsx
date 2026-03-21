@@ -31,7 +31,7 @@ const Analytics = ({ subscriptions }) => {
   const displayTotal = period === 'month' ? total : total * 12;
 
   return (
-    <div className="bg-blue-600 text-white p-6 rounded-2xl shadow-lg mb-6">
+    <div className="bg-blue-600 dark:bg-blue-800 text-white p-6 rounded-2xl shadow-lg mb-6 transition-colors duration-300">
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-blue-100 text-sm font-medium uppercase tracking-wide">
@@ -46,7 +46,7 @@ const Analytics = ({ subscriptions }) => {
         </div>
         <button 
           onClick={() => setPeriod(period === 'month' ? 'year' : 'month')}
-          className="bg-blue-500 p-2 rounded-lg hover:bg-blue-400 transition"
+          className="bg-blue-500 dark:bg-blue-700 p-2 rounded-lg hover:bg-blue-400 dark:hover:bg-blue-600 transition"
           title="Переключить период"
         >
           <Calculator size={24} />

@@ -45,6 +45,7 @@ const DataBackup = ({ subscriptions, onImport }) => {
       <button 
         onClick={handleExport}
         className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+        className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700 transition"
       >
         <Download size={18} /> Экспорт
       </button>
@@ -52,6 +53,7 @@ const DataBackup = ({ subscriptions, onImport }) => {
       <button 
         onClick={() => fileInputRef.current.click()}
         className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+        className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700 transition"
       >
         <Upload size={18} /> Импорт
       </button>

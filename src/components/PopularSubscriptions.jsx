@@ -38,8 +38,8 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
       onClick={() => setSelectedCategory(category)}
       className={`px-3 py-1 text-sm rounded-full whitespace-nowrap ${
         selectedCategory === category
-          ? 'bg-black text-white'
-          : 'bg-gray-200 text-gray-700'
+          ? 'bg-black dark:bg-white text-white dark:text-black'
+          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
       }`}
     >
       {category}
@@ -51,7 +51,7 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
       <input
         type="text"
         placeholder="Search popular subscriptions..."
-        className="w-full p-2 mb-4 border rounded-xl"
+        className="w-full p-2 mb-4 border dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
       />
@@ -66,33 +66,33 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
       <div className="overflow-y-auto flex-grow [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <div className="grid grid-cols-1 gap-4">
           <div
-              className="p-4 border rounded-xl cursor-pointer hover:bg-gray-100 flex items-center bg-gray-50"
+              className="p-4 border dark:border-gray-700 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center bg-gray-50 dark:bg-gray-800 transition-colors"
               onClick={onCustom}
           >
-              <div className="w-10 h-10 mr-4 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                <Plus size={24} className="text-gray-600" />
+              <div className="w-10 h-10 mr-4 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+                <Plus size={24} className="text-gray-600 dark:text-gray-400" />
               </div>
               <div>
-                <h3 className="font-bold">Add custom subscription</h3>
-                <p className="text-sm text-gray-500">Create manually</p>
+                <h3 className="font-bold dark:text-white">Add custom subscription</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Create manually</p>
               </div>
           </div>
           {filteredSubscriptions.map(sub => (
             <div
               key={sub.name}
-              className="p-4 border rounded-xl cursor-pointer hover:bg-gray-100 flex items-center"
+              className="p-4 border dark:border-gray-700 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center transition-colors"
               onClick={() => onSelect(sub)}
             >
               {sub.icon ? (
                 <img src={sub.icon} alt={`${sub.name} icon`} className="w-10 h-10 mr-4 rounded-full object-cover" />
               ) : (
-                <div className="w-10 h-10 mr-4 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 flex-shrink-0">
+              <div className="w-10 h-10 mr-4 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center font-bold text-gray-500 dark:text-gray-400 flex-shrink-0">
                   {sub.name[0]}
                 </div>
               )}
               <div>
-                <h3 className="font-bold">{sub.name}</h3>
-                <p className="text-sm text-gray-500">{sub.category}</p>
+              <h3 className="font-bold dark:text-white">{sub.name}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{sub.category}</p>
               </div>
             </div>
           ))}
