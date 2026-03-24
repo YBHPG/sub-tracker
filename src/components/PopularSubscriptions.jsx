@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import servicesList from '../assets/services.json';
+import { useLanguage } from './LanguageContext';
 
 // Подтягиваем все скачанные локальные иконки из assets/icons на этапе сборки Vite
 const iconModules = import.meta.glob('../assets/icons/*.{png,jpg,jpeg,svg}', { eager: true, import: 'default' });
 
 // Собираем финальный список, находя правильную картинку для каждого сервиса
 const popularSubscriptions = servicesList.map(service => {
-  const safeName = service.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+  // Используем domain вместо name, чтобы избежать проблем с кириллицей и пробелами
+  // Убираем "www." и заменяем оставшиеся спецсимволы (точки, слэши) на "_"
+  const safeName = service.domain.replace(/^www\./i, '').replace(/[^a-z0-9]/gi, '_').toLowerCase();
   const iconPath = Object.keys(iconModules).find(path => path.includes(`/${safeName}.`));
   return {
     ...service,
@@ -24,6 +27,7 @@ const bottomCategories = categories.slice(halfLen);
 const PopularSubscriptions = ({ onSelect, onCustom }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const { t } = useLanguage();
 
   const filteredSubscriptions = popularSubscriptions.filter(sub => {
     const matchesCategory = selectedCategory === 'All' || sub.category === selectedCategory;
@@ -42,15 +46,15 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
           : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
       }`}
     >
-      {category}
+      {t.categories[category] || category}
     </button>
   );
 
   return (
-    <div className="flex flex-col h-[500px] max-h-[80vh]">
+    <div className="flex flex-col flex-grow overflow-hidden">
       <input
         type="text"
-        placeholder="Search popular subscriptions..."
+        placeholder={t.searchPlaceholder}
         className="w-full p-2 mb-4 border dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
@@ -73,8 +77,8 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
                 <Plus size={24} className="text-gray-600 dark:text-gray-400" />
               </div>
               <div>
-                <h3 className="font-bold dark:text-white">Add custom subscription</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Create manually</p>
+              <h3 className="font-bold dark:text-white">{t.addCustom}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t.createManually}</p>
               </div>
           </div>
           {filteredSubscriptions.map(sub => (
@@ -92,7 +96,7 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
               )}
               <div>
               <h3 className="font-bold dark:text-white">{sub.name}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{sub.category}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{t.categories[sub.category] || sub.category}</p>
               </div>
             </div>
           ))}

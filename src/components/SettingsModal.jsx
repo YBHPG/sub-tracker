@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
 import { Download, Upload, X, Monitor, Sun, Moon } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) => {
   const fileInputRef = useRef(null);
+  const { language, setLanguage, t, currency, setCurrency } = useLanguage();
 
   const handleExport = () => {
     const dataStr = JSON.stringify(subscriptions, null, 2);
@@ -27,12 +29,12 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
         const data = JSON.parse(e.target.result);
         if (Array.isArray(data)) {
           onImport(data);
-          alert('Данные успешно восстановлены!');
+          alert(t.importSuccess);
         } else {
-          alert('Ошибка: Неверный формат файла.');
+          alert(t.importFormatError);
         }
       } catch (error) {
-        alert('Ошибка при чтении файла.');
+        alert(t.importReadError);
       }
     };
     reader.readAsText(file);
@@ -42,7 +44,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">Настройки</h2>
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white">{t.settings}</h2>
           <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
             <X size={24} />
           </button>
@@ -51,20 +53,20 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
         <div className="space-y-8">
           {/* Перенос данных */}
           <div>
-            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">Перенос данных</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.dataTransfer}</h3>
             <div className="flex gap-3">
               <button 
                 onClick={handleExport}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition"
               >
-                <Download size={18} /> Экспорт
+                <Download size={18} /> {t.export}
               </button>
 
               <button 
                 onClick={() => fileInputRef.current.click()}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition"
               >
-                <Upload size={18} /> Импорт
+                <Upload size={18} /> {t.import}
               </button>
               
               <input 
@@ -79,7 +81,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
 
           {/* Тема интерфейса */}
           <div>
-            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">Тема интерфейса</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.theme}</h3>
             <div className="grid grid-cols-3 gap-3">
               <button 
                 onClick={() => setTheme('light')}
@@ -90,7 +92,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
                 }`}
               >
                 <Sun size={24} />
-                <span className="text-xs font-medium">Светлая</span>
+                <span className="text-xs font-medium">{t.light}</span>
               </button>
               
               <button 
@@ -102,7 +104,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
                 }`}
               >
                 <Moon size={24} />
-                <span className="text-xs font-medium">Тёмная</span>
+                <span className="text-xs font-medium">{t.dark}</span>
               </button>
               
               <button 
@@ -114,8 +116,40 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
                 }`}
               >
                 <Monitor size={24} />
-                <span className="text-xs font-medium">Системная</span>
+                <span className="text-xs font-medium">{t.system}</span>
               </button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            {/* Язык */}
+            <div>
+              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.language}</h3>
+              <select 
+                value={language} 
+                onChange={(e) => setLanguage(e.target.value)}
+                className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-colors cursor-pointer"
+              >
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+              </select>
+            </div>
+
+            {/* Валюта */}
+            <div>
+              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.mainCurrency}</h3>
+              <select 
+                value={currency} 
+                onChange={(e) => setCurrency(e.target.value)}
+                className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-colors cursor-pointer"
+              >
+                <option value="RUB">₽ (RUB)</option>
+                <option value="USD">$ (USD)</option>
+                <option value="EUR">€ (EUR)</option>
+                <option value="BYN">Br (BYN)</option>
+                <option value="KZT">₸ (KZT)</option>
+                <option value="UAH">₴ (UAH)</option>
+              </select>
             </div>
           </div>
         </div>

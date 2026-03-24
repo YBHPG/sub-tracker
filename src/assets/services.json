@@ -1,279 +1,899 @@
 [
-  { "name": "Netflix", "domain": "www.netflix.com", "category": "Entertainment" },
-  { "name": "Amazon Prime Video", "domain": "www.amazon.com/primevideo", "category": "Entertainment" },
-  { "name": "Disney+", "domain": "www.disneyplus.com", "category": "Entertainment" },
-  { "name": "Hulu", "domain": "www.hulu.com", "category": "Entertainment" },
-  { "name": "Max", "domain": "www.max.com", "category": "Entertainment" },
-  { "name": "Paramount+", "domain": "www.paramountplus.com", "category": "Entertainment" },
-  { "name": "Peacock", "domain": "www.peacocktv.com", "category": "Entertainment" },
-  { "name": "Apple TV+", "domain": "www.apple.com/apple-tv-plus", "category": "Entertainment" },
-  { "name": "YouTube TV", "domain": "www.tv.youtube.com", "category": "Entertainment" },
-  { "name": "ESPN+", "domain": "www.plus.espn.com", "category": "Entertainment" },
-  { "name": "FuboTV", "domain": "www.fubo.tv", "category": "Entertainment" },
-  { "name": "Sling TV", "domain": "www.sling.com", "category": "Entertainment" },
+  { "name": "Netflix", "domain": "www.netflix.com", "category": "Entertainment", "plans": [
+    { "name": "Standard with ads", "cost": 6.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Standard", "cost": 15.49, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 22.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Disney+", "domain": "www.disneyplus.com", "category": "Entertainment", "plans": [
+    { "name": "Basic (With Ads)", "cost": 7.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 13.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium (Annual)", "cost": 139.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Hulu", "domain": "www.hulu.com", "category": "Entertainment", "plans": [
+    { "name": "With Ads", "cost": 7.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "No Ads", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Max", "domain": "www.max.com", "category": "Entertainment", "plans": [
+    { "name": "With Ads", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ad-Free", "cost": 15.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate Ad-Free", "cost": 19.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Paramount+", "domain": "www.paramountplus.com", "category": "Entertainment", "plans": [
+    { "name": "Essential", "cost": 5.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "with SHOWTIME", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Peacock", "domain": "www.peacocktv.com", "category": "Entertainment", "plans": [
+    { "name": "Premium", "cost": 5.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium Plus", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Apple TV+", "domain": "www.apple.com/apple-tv-plus", "category": "Entertainment", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Месяц (RU)", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ESPN+", "domain": "www.espn.com", "category": "Entertainment", "plans": [
+    { "name": "Monthly", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 109.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "FuboTV", "domain": "www.fubo.tv", "category": "Entertainment", "plans": [
+    { "name": "Pro", "cost": 79.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Elite", "cost": 89.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Sling TV", "domain": "www.sling.com", "category": "Entertainment", "plans": [
+    { "name": "Orange or Blue", "cost": 40.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Orange & Blue", "cost": 55.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Tubi", "domain": "www.tubitv.com", "category": "Entertainment" },
-  { "name": "Crunchyroll", "domain": "www.crunchyroll.com", "category": "Entertainment" },
-  { "name": "Discovery+", "domain": "www.discoveryplus.com", "category": "Entertainment" },
-  { "name": "Amazon Prime", "domain": "www.amazon.com/prime", "category": "E-commerce" },
-  { "name": "Walmart+", "domain": "www.walmart.com/plus", "category": "E-commerce" },
-  { "name": "Costco Membership", "domain": "www.costco.com/join-costco.html", "category": "E-commerce" },
-  { "name": "Sam's Club Plus", "domain": "www.samsclub.com/join", "category": "E-commerce" },
-  { "name": "Target Circle 360", "domain": "www.target.com/circle", "category": "E-commerce" },
-  { "name": "Instacart+", "domain": "www.instacart.com/plus", "category": "Food & Delivery" },
-  { "name": "DoorDash DashPass", "domain": "www.doordash.com/dashpass", "category": "Food & Delivery" },
-  { "name": "Uber One", "domain": "www.uber.com/us/en/u/uberone", "category": "Food & Delivery" },
-  { "name": "Grubhub+", "domain": "www.grubhub.com/plus", "category": "Food & Delivery" },
-  { "name": "Best Buy Totaltech", "domain": "www.bestbuy.com/totaltech", "category": "E-commerce" },
-  { "name": "HelloFresh", "domain": "www.hellofresh.com", "category": "Food & Delivery" },
-  { "name": "Blue Apron", "domain": "www.blueapron.com", "category": "Food & Delivery" },
-  { "name": "EveryPlate", "domain": "www.everyplate.com", "category": "Food & Delivery" },
-  { "name": "Factor75", "domain": "www.factor75.com", "category": "Food & Delivery" },
-  { "name": "Daily Harvest", "domain": "www.daily-harvest.com", "category": "Food & Delivery" },
-  { "name": "Sunbasket", "domain": "www.sunbasket.com", "category": "Food & Delivery" },
-  { "name": "Home Chef", "domain": "www.homechef.com", "category": "Food & Delivery" },
-  { "name": "Trade Coffee", "domain": "www.drinktrade.com", "category": "Food & Delivery" },
-  { "name": "Blue Bottle Coffee", "domain": "www.bluebottlecoffee.com/subscriptions", "category": "Food & Delivery" },
-  { "name": "Nespresso Subscriptions", "domain": "www.nespresso.com/us/en/subscriptions", "category": "Food & Delivery" },
-  { "name": "Winc", "domain": "www.winc.com", "category": "Food & Delivery" },
-  { "name": "Firstleaf", "domain": "www.firstleaf.com", "category": "Food & Delivery" },
-  { "name": "NatureBox", "domain": "www.naturebox.com", "category": "Food & Delivery" },
-  { "name": "ButcherBox", "domain": "www.butcherbox.com", "category": "Food & Delivery" },
-  { "name": "Thrive Market", "domain": "www.thrivemarket.com", "category": "E-commerce" },
-  { "name": "IPSY", "domain": "www.ipsy.com", "category": "Lifestyle & Beauty" },
-  { "name": "BoxyCharm", "domain": "www.boxycharm.com", "category": "Lifestyle & Beauty" },
-  { "name": "Birchbox", "domain": "www.birchbox.com", "category": "Lifestyle & Beauty" },
-  { "name": "FabFitFun", "domain": "www.fabfitfun.com", "category": "Lifestyle & Beauty" },
-  { "name": "Allure Beauty Box", "domain": "www.beautybox.allure.com", "category": "Lifestyle & Beauty" },
-  { "name": "Dollar Shave Club", "domain": "www.dollarshaveclub.com", "category": "Lifestyle & Beauty" },
-  { "name": "Harry’s", "domain": "www.harrys.com", "category": "Lifestyle & Beauty" },
-  { "name": "Scentbird", "domain": "www.scentbird.com", "category": "Lifestyle & Beauty" },
-  { "name": "Curology", "domain": "www.curology.com", "category": "Health & Fitness" },
-  { "name": "Glossier You", "domain": "www.glossier.com", "category": "Lifestyle & Beauty" },
-  { "name": "Planet Fitness", "domain": "www.planetfitness.com", "category": "Health & Fitness" },
-  { "name": "Peloton App+", "domain": "www.onepeloton.com/app", "category": "Health & Fitness" },
-  { "name": "Equinox", "domain": "www.equinox.com", "category": "Health & Fitness" },
-  { "name": "OrangeTheory Fitness", "domain": "www.orangetheory.com", "category": "Health & Fitness" },
-  { "name": "ClassPass", "domain": "www.classpass.com", "category": "Health & Fitness" },
-  { "name": "Crunch Fitness", "domain": "www.crunch.com", "category": "Health & Fitness" },
-  { "name": "F45 Training", "domain": "www.f45training.com", "category": "Health & Fitness" },
-  { "name": "Anytime Fitness", "domain": "www.anytimefitness.com", "category": "Health & Fitness" },
-  { "name": "CorePower Yoga", "domain": "www.corepoweryoga.com", "category": "Health & Fitness" },
-  { "name": "Apple Fitness+", "domain": "www.apple.com/apple-fitness-plus", "category": "Health & Fitness" },
-  { "name": "Whoop", "domain": "www.whoop.com", "category": "Health & Fitness" },
-  { "name": "Oura Ring", "domain": "www.ouraring.com", "category": "Health & Fitness" },
-  { "name": "Calm", "domain": "www.calm.com", "category": "Health & Fitness" },
-  { "name": "Headspace", "domain": "www.headspace.com", "category": "Health & Fitness" },
-  { "name": "BetterHelp", "domain": "www.betterhelp.com", "category": "Health & Fitness" },
-  { "name": "Xbox Game Pass", "domain": "www.xbox.com/en-US/xbox-game-pass", "category": "Gaming" },
-  { "name": "PlayStation Plus", "domain": "www.playstation.com/en-us/ps-plus", "category": "Gaming" },
-  { "name": "Nintendo Switch Online", "domain": "www.nintendo.com/switch/online-service", "category": "Gaming" },
-  { "name": "Discord Nitro", "domain": "www.discord.com/nitro", "category": "Social" },
-  { "name": "Twitch Turbo", "domain": "www.twitch.tv/turbo", "category": "Gaming" },
-  { "name": "Apple One", "domain": "www.apple.com/apple-one", "category": "Software" },
-  { "name": "Google One", "domain": "www.one.google.com", "category": "Software" },
-  { "name": "ChatGPT Plus", "domain": "www.chatgpt.com", "category": "Software" },
-  { "name": "Microsoft 365", "domain": "www.microsoft.com/microsoft-365", "category": "Software" },
-  { "name": "Adobe Creative Cloud", "domain": "www.adobe.com/creativecloud", "category": "Software" },
-  { "name": "Canva Pro", "domain": "www.canva.com/pro", "category": "Software" },
-  { "name": "Spotify Premium", "domain": "www.spotify.com/premium", "category": "Music" },
-  { "name": "Apple Music", "domain": "www.apple.com/apple-music", "category": "Music" },
-  { "name": "YouTube Premium", "domain": "www.youtube.com/premium", "category": "Entertainment" },
-  { "name": "Steam", "domain": "www.store.steampowered.com", "category": "Gaming" },
-  { "name": "BarkBox", "domain": "www.barkbox.com", "category": "Pets" },
-  { "name": "The Farmer’s Dog", "domain": "www.thefarmersdog.com", "category": "Pets" },
-  { "name": "Chewy Pharmacy", "domain": "www.chewy.com/b/pharmacy-2322", "category": "Pets" },
-  { "name": "Meowbox", "domain": "www.meowbox.com", "category": "Pets" },
-  { "name": "PrettyLitter", "domain": "www.prettylitter.com", "category": "Pets" },
-  { "name": "Audible", "domain": "www.audible.com", "category": "Education & Books" },
-  { "name": "Kindle Unlimited", "domain": "www.amazon.com/kindle-dbs/hz/signup", "category": "Education & Books" },
-  { "name": "MasterClass", "domain": "www.masterclass.com", "category": "Education & Books" },
-  { "name": "Duolingo Plus", "domain": "www.duolingo.com/super", "category": "Education & Books" },
-  { "name": "KiwiCo", "domain": "www.kiwico.com", "category": "Education & Books" },
-  { "name": "Stitch Fix", "domain": "www.stitchfix.com", "category": "Fashion" },
-  { "name": "Rent the Runway", "domain": "www.renttherunway.com", "category": "Fashion" },
-  { "name": "Bespoke Post", "domain": "www.bespokepost.com", "category": "Lifestyle & Beauty" },
-  { "name": "Book of the Month", "domain": "www.bookofthemonth.com", "category": "Education & Books" },
-  { "name": "New York Times Digital", "domain": "www.nytimes.com/subscription", "category": "News & Media" },
-  { "name": "Tesla FSD", "domain": "www.tesla.com/support/full-self-driving-capability", "category": "Transport & Auto" },
-  { "name": "BMW ConnectedDrive", "domain": "www.bmwusa.com/content/bmwusa/marketUS/bmwusa_com/connected-drive.html", "category": "Transport & Auto" },
-  { "name": "AAA Membership", "domain": "www.aaa.com", "category": "Transport & Auto" },
-  { "name": "BlueChew", "domain": "www.bluechew.com", "category": "Health & Fitness" },
-  { "name": "Starlink", "domain": "www.starlink.com", "category": "Utilities & Services" },
-  { "name": "Viaplay", "domain": "www.viaplay.com", "category": "Entertainment" },
-  { "name": "RTL+", "domain": "www.rtl.de", "category": "Entertainment" },
-  { "name": "Movistar Plus+", "domain": "www.movistarplus.es", "category": "Entertainment" },
-  { "name": "Sky", "domain": "www.sky.com", "category": "Entertainment" },
-  { "name": "Mubi", "domain": "www.mubi.com", "category": "Entertainment" },
+  { "name": "Crunchyroll", "domain": "www.crunchyroll.com", "category": "Entertainment", "plans": [
+    { "name": "Fan", "cost": 7.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Mega Fan", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Fan (RU)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Discovery+", "domain": "www.discoveryplus.com", "category": "Entertainment", "plans": [
+    { "name": "Ad-Lite", "cost": 4.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ad-Free", "cost": 8.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Amazon Prime", "domain": "www.primevideo.com", "category": "E-commerce", "plans": [
+    { "name": "Monthly", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 139.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Walmart+", "domain": "www.walmart.com/plus", "category": "E-commerce", "plans": [
+    { "name": "Monthly", "cost": 12.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 98.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Costco Membership", "domain": "www.costco.com/join-costco.html", "category": "E-commerce", "plans": [
+    { "name": "Gold Star", "cost": 60.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 },
+    { "name": "Executive", "cost": 120.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Sam's Club Plus", "domain": "www.samsclub.com/join", "category": "E-commerce", "plans": [
+    { "name": "Club", "cost": 50.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 },
+    { "name": "Plus", "cost": 110.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Target Circle 360", "domain": "www.target.com/circle", "category": "E-commerce", "plans": [
+    { "name": "Annual", "cost": 99.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Instacart+", "domain": "www.instacart.com/plus", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 99.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "DoorDash DashPass", "domain": "www.doordash.com/dashpass", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 96.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Uber One", "domain": "www.uber.com/us/en/uber-one/", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 96.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Grubhub+", "domain": "www.grubhub.com/plus", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 99.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Best Buy Totaltech", "domain": "www.bestbuy.com/totaltech", "category": "E-commerce", "plans": [
+    { "name": "My Best Buy Plus", "cost": 49.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 },
+    { "name": "My Best Buy Total", "cost": 179.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "HelloFresh", "domain": "www.hellofresh.com", "category": "Food & Delivery", "plans": [
+    { "name": "2 Meals for 2 (Weekly)", "cost": 50.96, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "EveryPlate", "domain": "www.everyplate.com", "category": "Food & Delivery", "plans": [
+    { "name": "3 Meals for 2 (Weekly)", "cost": 45.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Factor75", "domain": "www.factor75.com", "category": "Food & Delivery", "plans": [
+    { "name": "6 Meals (Weekly)", "cost": 80.94, "currency": "USD", "periodUnit": "week", "periodQty": 1 },
+    { "name": "8 Meals (Weekly)", "cost": 103.92, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Daily Harvest", "domain": "www.daily-harvest.com", "category": "Food & Delivery", "plans": [
+    { "name": "Small Box (Weekly)", "cost": 45.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 },
+    { "name": "Medium Box (Weekly)", "cost": 75.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Sunbasket", "domain": "www.sunbasket.com", "category": "Food & Delivery", "plans": [
+    { "name": "2 Recipes for 2 (Weekly)", "cost": 55.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Home Chef", "domain": "www.homechef.com", "category": "Food & Delivery", "plans": [
+    { "name": "2 Recipes for 2 (Weekly)", "cost": 50.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Trade Coffee", "domain": "www.drinktrade.com", "category": "Food & Delivery", "plans": [
+    { "name": "1 Bag (Monthly)", "cost": 15.75, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Blue Bottle Coffee", "domain": "www.bluebottlecoffee.com/subscriptions", "category": "Food & Delivery", "plans": [
+    { "name": "Half Bag (Bi-Weekly)", "cost": 13.00, "currency": "USD", "periodUnit": "week", "periodQty": 2 }
+  ]},
+  { "name": "Nespresso Subscriptions", "domain": "www.nespresso.com/us/en/subscriptions", "category": "Food & Delivery", "plans": [
+    { "name": "Machine Plan", "cost": 35.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Winc", "domain": "www.winc.com", "category": "Food & Delivery", "plans": [
+    { "name": "4 Bottles (Monthly)", "cost": 59.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Firstleaf", "domain": "www.firstleaf.com", "category": "Food & Delivery", "plans": [
+    { "name": "6 Bottles (Monthly)", "cost": 90.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "NatureBox", "domain": "www.naturebox.com", "category": "Food & Delivery", "plans": [
+    { "name": "Annual Membership", "cost": 30.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "ButcherBox", "domain": "www.butcherbox.com", "category": "Food & Delivery", "plans": [
+    { "name": "Custom Classic (Monthly)", "cost": 169.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Thrive Market", "domain": "www.thrivemarket.com", "category": "E-commerce", "plans": [
+    { "name": "Monthly", "cost": 12.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 59.95, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "IPSY", "domain": "www.ipsy.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Glam Bag", "cost": 14.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "BoxyCharm", "cost": 30.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "BoxyCharm", "domain": "www.boxycharm.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Base Box", "cost": 30.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Birchbox", "domain": "www.birchbox.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 20.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "FabFitFun", "domain": "fabfitfun.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Seasonal", "cost": 59.99, "currency": "USD", "periodUnit": "month", "periodQty": 3 },
+    { "name": "Annual", "cost": 219.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Allure Beauty Box", "domain": "allurebeautybox.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 25.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 250.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Dollar Shave Club", "domain": "www.dollarshaveclub.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Starter Set", "cost": 5.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Harry’s", "domain": "www.harrys.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Core Plan", "cost": 15.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Scentbird", "domain": "www.scentbird.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 16.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Curology", "domain": "www.curology.com", "category": "Health & Fitness", "plans": [
+    { "name": "Custom Skincare", "cost": 29.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Glossier You", "domain": "www.glossier.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Replenishment", "cost": 50.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Planet Fitness", "domain": "www.planetfitness.com", "category": "Health & Fitness", "plans": [
+    { "name": "Classic", "cost": 15.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Black Card", "cost": 24.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Peloton App+", "domain": "www.onepeloton.com/app", "category": "Health & Fitness", "plans": [
+    { "name": "App One", "cost": 12.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "App+", "cost": 24.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Equinox", "domain": "www.equinox.com", "category": "Health & Fitness", "plans": [
+    { "name": "Select Access", "cost": 230.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "All Access", "cost": 315.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "OrangeTheory Fitness", "domain": "www.orangetheory.com", "category": "Health & Fitness", "plans": [
+    { "name": "Basic (4 classes)", "cost": 79.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premier (Unlimited)", "cost": 169.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ClassPass", "domain": "www.classpass.com", "category": "Health & Fitness", "plans": [
+    { "name": "28 Credits", "cost": 59.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Crunch Fitness", "domain": "www.crunch.com", "category": "Health & Fitness", "plans": [
+    { "name": "Base", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Peak Results", "cost": 29.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "F45 Training", "domain": "www.f45training.com", "category": "Health & Fitness", "plans": [
+    { "name": "Unlimited Monthly", "cost": 199.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Anytime Fitness", "domain": "www.anytimefitness.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly Average", "cost": 40.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "CorePower Yoga", "domain": "www.corepoweryoga.com", "category": "Health & Fitness", "plans": [
+    { "name": "All Access", "cost": 149.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Apple Fitness+", "domain": "www.apple.com/apple-fitness-plus", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Месяц (RU)", "cost": 249, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Whoop", "domain": "www.whoop.com", "category": "Health & Fitness", "plans": [
+    { "name": "Annual", "cost": 239.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Oura Ring", "domain": "www.ouraring.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 5.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 69.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Calm", "domain": "www.calm.com", "category": "Health & Fitness", "plans": [
+    { "name": "Annual", "cost": 69.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Headspace", "domain": "www.headspace.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 12.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 69.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "BetterHelp", "domain": "www.betterhelp.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly Average", "cost": 260.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Xbox Game Pass", "domain": "www.xbox.com", "category": "Gaming", "plans": [
+    { "name": "PC", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate (RU)", "cost": 1200, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "PlayStation Plus", "domain": "www.playstation.com", "category": "Gaming", "plans": [
+    { "name": "Essential", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Extra", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Nintendo Switch Online", "domain": "www.nintendo.com", "category": "Gaming", "plans": [
+    { "name": "Individual Annual", "cost": 19.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 },
+    { "name": "Family Annual", "cost": 34.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Discord Nitro", "domain": "www.discord.com", "category": "Social", "plans": [
+    { "name": "Basic", "cost": 2.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Nitro", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Nitro (RU)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Twitch Turbo", "domain": "www.twitch.tv", "category": "Gaming", "plans": [
+    { "name": "Monthly", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Apple One", "domain": "www.apple.com", "category": "Software", "plans": [
+    { "name": "Individual", "cost": 19.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 25.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Google One", "domain": "one.google.com", "category": "Software", "plans": [
+    { "name": "Basic (100GB)", "cost": 1.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium (2TB)", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Basic 100GB (RU)", "cost": 139, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ChatGPT Plus", "domain": "www.chatgpt.com", "category": "Software", "plans": [
+    { "name": "Plus", "cost": 20.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Microsoft 365", "domain": "www.microsoft.com", "category": "Software", "plans": [
+    { "name": "Personal", "cost": 6.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Personal (RU)", "cost": 349, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Adobe Creative Cloud", "domain": "www.adobe.com", "category": "Software", "plans": [
+    { "name": "Photography", "cost": 19.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "All Apps", "cost": 59.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Canva Pro", "domain": "www.canva.com", "category": "Software", "plans": [
+    { "name": "Monthly", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Месяц (RU)", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Spotify Premium", "domain": "www.spotify.com", "category": "Music", "plans": [
+    { "name": "Individual", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Duo", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Apple Music", "domain": "music.apple.com", "category": "Music", "plans": [
+    { "name": "Individual", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Индивидуальная (RU)", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "YouTube Premium", "domain": "www.youtube.com", "category": "Entertainment", "plans": [
+    { "name": "Individual", "cost": 13.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 22.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Индивидуальная (RU)", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "BarkBox", "domain": "www.barkbox.com", "category": "Pets", "plans": [
+    { "name": "Monthly", "cost": 35.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "The Farmer’s Dog", "domain": "www.thefarmersdog.com", "category": "Pets", "plans": [
+    { "name": "Weekly Box", "cost": 40.00, "currency": "USD", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Chewy Pharmacy", "domain": "www.chewy.com", "category": "Pets" },
+  { "name": "Meowbox", "domain": "www.meowbox.com", "category": "Pets", "plans": [
+    { "name": "Monthly", "cost": 23.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "PrettyLitter", "domain": "www.prettylitter.com", "category": "Pets", "plans": [
+    { "name": "1 Cat (Monthly)", "cost": 24.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Audible", "domain": "www.audible.com", "category": "Education & Books", "plans": [
+    { "name": "Plus", "cost": 7.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium Plus", "cost": 14.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Kindle Unlimited", "domain": "www.amazon.com", "category": "Education & Books", "plans": [
+    { "name": "Monthly", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "MasterClass", "domain": "www.masterclass.com", "category": "Education & Books", "plans": [
+    { "name": "Individual Annual", "cost": 120.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Duolingo Plus", "domain": "www.duolingo.com", "category": "Education & Books", "plans": [
+    { "name": "Super Monthly", "cost": 12.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Super Annual", "cost": 83.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "KiwiCo", "domain": "www.kiwico.com", "category": "Education & Books", "plans": [
+    { "name": "Monthly", "cost": 23.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Stitch Fix", "domain": "www.stitchfix.com", "category": "Fashion", "plans": [
+    { "name": "Styling Fee", "cost": 20.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Rent the Runway", "domain": "www.renttherunway.com", "category": "Fashion", "plans": [
+    { "name": "10 Items", "cost": 144.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Bespoke Post", "domain": "www.bespokepost.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly Box", "cost": 49.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Book of the Month", "domain": "www.bookofthemonth.com", "category": "Education & Books", "plans": [
+    { "name": "Monthly", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "New York Times Digital", "domain": "www.nytimes.com", "category": "News & Media", "plans": [
+    { "name": "All Access", "cost": 25.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tesla FSD", "domain": "www.tesla.com/support/full-self-driving-capability", "category": "Transport & Auto", "plans": [
+    { "name": "Monthly", "cost": 99.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "BMW ConnectedDrive", "domain": "www.bmw.com", "category": "Transport & Auto", "plans": [
+    { "name": "Premium Annual", "cost": 120.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "AAA Membership", "domain": "www.aaa.com", "category": "Transport & Auto", "plans": [
+    { "name": "Classic Annual", "cost": 60.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "BlueChew", "domain": "www.bluechew.com", "category": "Health & Fitness", "plans": [
+    { "name": "Active Plan", "cost": 20.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Starlink", "domain": "www.starlink.com", "category": "Utilities & Services", "plans": [
+    { "name": "Standard Monthly", "cost": 120.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Viaplay", "domain": "www.viaplay.com", "category": "Entertainment", "plans": [
+    { "name": "Medium", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Total", "cost": 15.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "RTL+", "domain": "www.rtl.de", "category": "Entertainment", "plans": [
+    { "name": "Premium", "cost": 6.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Max", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Movistar Plus+", "domain": "www.movistarplus.es", "category": "Entertainment", "plans": [
+    { "name": "Standard", "cost": 14.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Sky", "domain": "www.sky.com", "category": "Entertainment", "plans": [
+    { "name": "Entertainment", "cost": 15.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Mubi", "domain": "www.mubi.com", "category": "Entertainment", "plans": [
+    { "name": "Monthly", "cost": 11.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 95.88, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
   { "name": "Rakuten TV", "domain": "www.rakuten.tv", "category": "Entertainment" },
-  { "name": "DAZN", "domain": "www.dazn.com", "category": "Entertainment" },
-  { "name": "Eurosport", "domain": "www.eurosport.com", "category": "Entertainment" },
+  { "name": "DAZN", "domain": "www.dazn.com", "category": "Entertainment", "plans": [
+    { "name": "Monthly", "cost": 29.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 299.88, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Eurosport", "domain": "www.eurosport.com", "category": "Entertainment", "plans": [
+    { "name": "Premium", "cost": 5.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Arte.tv", "domain": "www.arte.tv", "category": "Entertainment" },
-  { "name": "Canal+", "domain": "www.canalplus.com", "category": "Entertainment" },
-  { "name": "Curzon Home Cinema", "domain": "www.curzon.com", "category": "Entertainment" },
-  { "name": "Deezer", "domain": "www.deezer.com", "category": "Music" },
-  { "name": "Tidal", "domain": "www.tidal.com", "category": "Music" },
-  { "name": "SoundCloud", "domain": "www.soundcloud.com", "category": "Music" },
-  { "name": "Qobuz", "domain": "www.qobuz.com", "category": "Music" },
-  { "name": "Zalando Plus", "domain": "www.zalando.com", "category": "Fashion" },
-  { "name": "H&M Member", "domain": "www.www2.hm.com", "category": "Fashion" },
-  { "name": "Deliveroo Plus", "domain": "www.deliveroo.com", "category": "Food & Delivery" },
+  { "name": "Canal+", "domain": "www.canalplus.com", "category": "Entertainment", "plans": [
+    { "name": "Standard", "cost": 22.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Curzon Home Cinema", "domain": "www.curzon.com", "category": "Entertainment", "plans": [
+    { "name": "Cult Membership", "cost": 15.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Deezer", "domain": "www.deezer.com", "category": "Music", "plans": [
+    { "name": "Premium", "cost": 11.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 19.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium (RU)", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tidal", "domain": "www.tidal.com", "category": "Music", "plans": [
+    { "name": "HiFi", "cost": 10.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Family", "cost": 16.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "SoundCloud", "domain": "www.soundcloud.com", "category": "Music", "plans": [
+    { "name": "Go+", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Qobuz", "domain": "www.qobuz.com", "category": "Music", "plans": [
+    { "name": "Studio Premier", "cost": 14.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Zalando Plus", "domain": "www.zalando.com", "category": "Fashion", "plans": [
+    { "name": "Annual", "cost": 14.90, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "H&M Member", "domain": "www2.hm.com", "category": "Fashion" },
+  { "name": "Deliveroo Plus", "domain": "www.deliveroo.com", "category": "Food & Delivery", "plans": [
+    { "name": "Silver", "cost": 2.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Gold", "cost": 5.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Just Eat", "domain": "www.just-eat.com", "category": "Food & Delivery" },
-  { "name": "Glovo Prime", "domain": "www.glovoapp.com", "category": "Food & Delivery" },
-  { "name": "Wolt+", "domain": "www.wolt.com", "category": "Food & Delivery" },
-  { "name": "Bolt Food", "domain": "www.bolt.eu/food", "category": "Food & Delivery" },
-  { "name": "Carrefour P+", "domain": "www.carrefour.fr", "category": "E-commerce" },
-  { "name": "Marley Spoon", "domain": "www.marleyspoon.com", "category": "Food & Delivery" },
-  { "name": "Gousto", "domain": "www.gousto.co.uk", "category": "Food & Delivery" },
-  { "name": "Degusta Box", "domain": "www.degustabox.com", "category": "Food & Delivery" },
-  { "name": "Pasta Evangelists", "domain": "www.pastaevangelists.com", "category": "Food & Delivery" },
-  { "name": "Mindful Chef", "domain": "www.mindfulchef.com", "category": "Food & Delivery" },
-  { "name": "SimpleCook", "domain": "www.simplycook.com", "category": "Food & Delivery" },
-  { "name": "Prepmymeal", "domain": "www.prepmymeal.com", "category": "Food & Delivery" },
-  { "name": "Coffee Circle", "domain": "www.coffeecircle.com", "category": "Food & Delivery" },
-  { "name": "Basic-Fit", "domain": "www.basic-fit.com", "category": "Health & Fitness" },
-  { "name": "McFit", "domain": "www.mcfit.com", "category": "Health & Fitness" },
-  { "name": "Urban Sports Club", "domain": "www.urbansportsclub.com", "category": "Health & Fitness" },
-  { "name": "FitX", "domain": "www.fitx.de", "category": "Health & Fitness" },
-  { "name": "Strava", "domain": "www.strava.com", "category": "Health & Fitness" },
-  { "name": "Freeletics", "domain": "www.freeletics.com", "category": "Health & Fitness" },
-  { "name": "Withings+", "domain": "www.withings.com", "category": "Health & Fitness" },
-  { "name": "Deutschlandticket", "domain": "www.bahn.de", "category": "Transport & Auto" },
-  { "name": "SNCF Connect", "domain": "www.sncf-connect.com", "category": "Transport & Auto" },
-  { "name": "Swapfiets", "domain": "www.swapfiets.com", "category": "Transport & Auto" },
-  { "name": "Tier", "domain": "www.tier.app", "category": "Transport & Auto" },
-  { "name": "Voi Pass", "domain": "www.voiscooters.com", "category": "Transport & Auto" },
+  { "name": "Glovo Prime", "domain": "www.glovoapp.com", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 5.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Wolt+", "domain": "www.wolt.com", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 5.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Bolt Food", "domain": "www.bolt.eu", "category": "Food & Delivery" },
+  { "name": "Carrefour P+", "domain": "www.carrefour.fr", "category": "E-commerce", "plans": [
+    { "name": "Monthly", "cost": 5.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Marley Spoon", "domain": "www.marleyspoon.com", "category": "Food & Delivery", "plans": [
+    { "name": "2 People (3 Meals)", "cost": 45.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Gousto", "domain": "www.gousto.co.uk", "category": "Food & Delivery", "plans": [
+    { "name": "2 People (3 Meals)", "cost": 35.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Degusta Box", "domain": "www.degustabox.com", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly", "cost": 15.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Pasta Evangelists", "domain": "www.pastaevangelists.com", "category": "Food & Delivery", "plans": [
+    { "name": "Double Portion", "cost": 15.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Mindful Chef", "domain": "www.mindfulchef.com", "category": "Food & Delivery", "plans": [
+    { "name": "2 People (3 Meals)", "cost": 45.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "SimpleCook", "domain": "www.simplycook.com", "category": "Food & Delivery", "plans": [
+    { "name": "Monthly Box", "cost": 12.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Prepmymeal", "domain": "www.prepmymeal.com", "category": "Food & Delivery", "plans": [
+    { "name": "6 Meals", "cost": 55.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Coffee Circle", "domain": "www.coffeecircle.com", "category": "Food & Delivery", "plans": [
+    { "name": "1 Bag", "cost": 14.90, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Basic-Fit", "domain": "www.basic-fit.com", "category": "Health & Fitness", "plans": [
+    { "name": "Basic", "cost": 19.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 29.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "McFit", "domain": "www.mcfit.com", "category": "Health & Fitness", "plans": [
+    { "name": "Basic", "cost": 24.90, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Urban Sports Club", "domain": "www.urbansportsclub.com", "category": "Health & Fitness", "plans": [
+    { "name": "M", "cost": 69.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "L", "cost": 109.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "FitX", "domain": "www.fitx.de", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 24.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Strava", "domain": "www.strava.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 10.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 59.99, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Freeletics", "domain": "www.freeletics.com", "category": "Health & Fitness", "plans": [
+    { "name": "Training Coach (3 Months)", "cost": 34.99, "currency": "EUR", "periodUnit": "month", "periodQty": 3 }
+  ]},
+  { "name": "Withings+", "domain": "www.withings.com", "category": "Health & Fitness", "plans": [
+    { "name": "Monthly", "cost": 9.95, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 99.50, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Deutschlandticket", "domain": "www.bahn.de", "category": "Transport & Auto", "plans": [
+    { "name": "Monthly", "cost": 49.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "SNCF Connect", "domain": "www.sncf-connect.com", "category": "Transport & Auto", "plans": [
+    { "name": "Carte Avantage (Annual)", "cost": 49.00, "currency": "EUR", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Swapfiets", "domain": "www.swapfiets.com", "category": "Transport & Auto", "plans": [
+    { "name": "Original", "cost": 19.50, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Power 1", "cost": 59.90, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tier", "domain": "www.tier.app", "category": "Transport & Auto", "plans": [
+    { "name": "Monthly Pass", "cost": 29.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Voi Pass", "domain": "www.voiscooters.com", "category": "Transport & Auto", "plans": [
+    { "name": "Monthly Pass", "cost": 39.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Free Now", "domain": "www.free-now.com", "category": "Transport & Auto" },
-  { "name": "Sixt+", "domain": "www.sixt.com/plus", "category": "Transport & Auto" },
-  { "name": "Lynk & Co", "domain": "www.lynkco.com", "category": "Transport & Auto" },
-  { "name": "Interrail Pass", "domain": "www.interrail.eu", "category": "Transport & Auto" },
-  { "name": "Glossybox", "domain": "www.glossybox.com", "category": "Lifestyle & Beauty" },
-  { "name": "Lookfantastic Beauty Box", "domain": "www.lookfantastic.com", "category": "Lifestyle & Beauty" },
-  { "name": "Goodiebox", "domain": "www.bygoodiebox.com", "category": "Lifestyle & Beauty" },
-  { "name": "Mornin' Glory", "domain": "www.morninglory.com", "category": "Lifestyle & Beauty" },
-  { "name": "Ubisoft+", "domain": "www.store.ubisoft.com/plus", "category": "Gaming" },
-  { "name": "Proton Drive/Mail", "domain": "www.proton.me", "category": "Utilities & Services" },
-  { "name": "Butternut Box", "domain": "www.butternutbox.com", "category": "Pets" },
-  { "name": "Tail-it", "domain": "www.tailit.com", "category": "Pets" },
+  { "name": "Sixt+", "domain": "www.sixt.com/plus", "category": "Transport & Auto", "plans": [
+    { "name": "Compact", "cost": 499.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Lynk & Co", "domain": "www.lynkco.com", "category": "Transport & Auto", "plans": [
+    { "name": "Month-to-Month", "cost": 550.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Interrail Pass", "domain": "www.interrail.eu", "category": "Transport & Auto", "plans": [
+    { "name": "Continuous 1 Month", "cost": 335.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Glossybox", "domain": "www.glossybox.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 15.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Lookfantastic Beauty Box", "domain": "www.lookfantastic.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 20.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Goodiebox", "domain": "www.bygoodiebox.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly", "cost": 19.95, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Mornin' Glory", "domain": "www.morninglory.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Starter", "cost": 15.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Ubisoft+", "domain": "www.ubisoft.com", "category": "Gaming", "plans": [
+    { "name": "Classics", "cost": 7.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Proton Drive/Mail", "domain": "www.proton.me", "category": "Utilities & Services", "plans": [
+    { "name": "Mail Plus", "cost": 3.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Unlimited", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Butternut Box", "domain": "www.butternutbox.com", "category": "Pets", "plans": [
+    { "name": "Weekly Box", "cost": 50.00, "currency": "EUR", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Tail-it", "domain": "www.tailit.com", "category": "Pets", "plans": [
+    { "name": "Monthly", "cost": 4.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Zooplus", "domain": "www.zooplus.com", "category": "Pets" },
   { "name": "PetPost", "domain": "www.petpost.com", "category": "Pets" },
-  { "name": "Babbel", "domain": "www.babbel.com", "category": "Education & Books" },
-  { "name": "Coursera Plus", "domain": "www.coursera.org", "category": "Education & Books" },
-  { "name": "The Economist", "domain": "www.economist.com", "category": "News & Media" },
-  { "name": "Financial Times", "domain": "www.ft.com", "category": "News & Media" },
-  { "name": "Le Monde", "domain": "www.lemonde.fr", "category": "News & Media" },
-  { "name": "Der Spiegel", "domain": "www.spiegel.de", "category": "News & Media" },
-  { "name": "El País", "domain": "www.elpais.com", "category": "News & Media" },
-  { "name": "Readly", "domain": "www.readly.com", "category": "News & Media" },
-  { "name": "Wild", "domain": "www.wearewild.com", "category": "Lifestyle & Beauty" },
-  { "name": "Who Gives A Crap", "domain": "www.whogivesacrap.org", "category": "Lifestyle & Beauty" },
-  { "name": "Grüum", "domain": "www.gruum.com", "category": "Lifestyle & Beauty" },
-  { "name": "Ecosia", "domain": "www.ecosia.org", "category": "Utilities & Services" },
-  { "name": "Яндекс Плюс", "domain": "www.plus.yandex.ru", "category": "E-commerce" },
-  { "name": "СберПрайм", "domain": "www.sberprime.sber.ru", "category": "E-commerce" },
-  { "name": "МТС Premium", "domain": "www.premium.mts.ru", "category": "Telecom" },
-  { "name": "Tinkoff Pro", "domain": "www.tinkoff.ru/pro", "category": "Finance" },
-  { "name": "VK Mix", "domain": "www.vkmix.ru", "category": "Social" },
-  { "name": "Газпром Бонус", "domain": "www.gazprombonus.ru", "category": "Finance" },
-  { "name": "МегаФон Плюс", "domain": "www.plus.megafon.ru", "category": "Telecom" },
-  { "name": "Кинопоиск", "domain": "www.hd.kinopoisk.ru", "category": "Entertainment" },
-  { "name": "Иви", "domain": "www.ivi.ru", "category": "Entertainment" },
-  { "name": "Okko", "domain": "www.okko.tv", "category": "Entertainment" },
-  { "name": "Wink", "domain": "www.wink.ru", "category": "Entertainment" },
-  { "name": "Start", "domain": "www.start.ru", "category": "Entertainment" },
-  { "name": "KION", "domain": "www.kion.ru", "category": "Entertainment" },
-  { "name": "PREMIER", "domain": "www.premier.one", "category": "Entertainment" },
-  { "name": "Амедиатека", "domain": "www.amediateka.ru", "category": "Entertainment" },
-  { "name": "Viju", "domain": "www.viju.ru", "category": "Entertainment" },
-  { "name": "Триколор Кино и ТВ", "domain": "www.kino.tricolor.tv", "category": "Entertainment" },
-  { "name": "Яндекс Музыка", "domain": "www.music.yandex.ru", "category": "Music" },
-  { "name": "Звук", "domain": "www.zvuk.com", "category": "Music" },
-  { "name": "VK Музыка", "domain": "www.music.vk.com", "category": "Music" },
-  { "name": "МТС Music", "domain": "www.music.mts.ru", "category": "Music" },
-  { "name": "Строки", "domain": "www.stroki.mts.ru", "category": "Education & Books" },
-  { "name": "Литрес", "domain": "www.litres.ru/pages/subscription", "category": "Education & Books" },
-  { "name": "Букмейт", "domain": "www.bookmate.ru", "category": "Education & Books" },
-  { "name": "MyBook", "domain": "www.mybook.ru", "category": "Education & Books" },
-  { "name": "Ozon Premium", "domain": "www.ozon.ru/highlight/premium", "category": "E-commerce" },
-  { "name": "X5 Пакет", "domain": "www.x5paket.ru", "category": "E-commerce" },
-  { "name": "Магнит Плюс", "domain": "www.magnit.ru/plus", "category": "E-commerce" },
-  { "name": "ВкусВилл", "domain": "www.vkusvill.ru", "category": "Food & Delivery" },
-  { "name": "Лента Плюс", "domain": "www.lenta.com", "category": "E-commerce" },
-  { "name": "Яндекс Еда", "domain": "www.eda.yandex.ru", "category": "Food & Delivery" },
-  { "name": "Купер", "domain": "www.kuper.ru", "category": "Food & Delivery" },
-  { "name": "Самокат", "domain": "www.samokat.ru", "category": "Food & Delivery" },
-  { "name": "Grow Food", "domain": "www.growfood.pro", "category": "Food & Delivery" },
-  { "name": "Level Kitchen", "domain": "www.levelkitchen.com", "category": "Food & Delivery" },
-  { "name": "My Food", "domain": "www.m-food.ru", "category": "Food & Delivery" },
-  { "name": "Chefmarket", "domain": "www.chefmarket.ru", "category": "Food & Delivery" },
-  { "name": "Elementaree", "domain": "www.elementaree.ru", "category": "Food & Delivery" },
+  { "name": "Babbel", "domain": "www.babbel.com", "category": "Education & Books", "plans": [
+    { "name": "Monthly", "cost": 13.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "6 Months", "cost": 66.90, "currency": "USD", "periodUnit": "month", "periodQty": 6 }
+  ]},
+  { "name": "Coursera Plus", "domain": "www.coursera.org", "category": "Education & Books", "plans": [
+    { "name": "Monthly", "cost": 59.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Annual", "cost": 399.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "The Economist", "domain": "www.economist.com", "category": "News & Media", "plans": [
+    { "name": "Digital", "cost": 19.90, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Financial Times", "domain": "www.ft.com", "category": "News & Media", "plans": [
+    { "name": "Standard Digital", "cost": 40.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium Digital", "cost": 69.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Le Monde", "domain": "www.lemonde.fr", "category": "News & Media", "plans": [
+    { "name": "Digital", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Der Spiegel", "domain": "www.spiegel.de", "category": "News & Media", "plans": [
+    { "name": "Spiegel+", "cost": 21.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "El País", "domain": "www.elpais.com", "category": "News & Media", "plans": [
+    { "name": "Digital", "cost": 10.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Readly", "domain": "www.readly.com", "category": "News & Media", "plans": [
+    { "name": "Monthly", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Wild", "domain": "www.wearewild.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Refill Plan", "cost": 15.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Who Gives A Crap", "domain": "www.whogivesacrap.org", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Bi-Monthly", "cost": 60.00, "currency": "USD", "periodUnit": "month", "periodQty": 2 }
+  ]},
+  { "name": "Grüum", "domain": "www.gruum.com", "category": "Lifestyle & Beauty", "plans": [
+    { "name": "Monthly Box", "cost": 12.00, "currency": "EUR", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Ecosia", "domain": "www.ecosia.org", "category": "Utilities & Services", "plans": [
+    { "name": "Tree Subscription", "cost": 5.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Яндекс Плюс", "domain": "plus.yandex.ru", "category": "E-commerce", "plans": [
+    { "name": "Плюс (Месяц)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Плюс (Год)", "cost": 1990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "СберПрайм", "domain": "www.sberbank.ru", "category": "E-commerce", "plans": [
+    { "name": "Прайм", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Прайм+", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "МТС Premium", "domain": "premium.mts.ru", "category": "Telecom", "plans": [
+    { "name": "Месяц", "cost": 249, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tinkoff Pro", "domain": "tbank.ru", "category": "Finance", "plans": [
+    { "name": "Pro", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium", "cost": 1990, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Газпром Бонус", "domain": "gazprombonus.ru", "category": "Finance", "plans": [
+    { "name": "Базовая", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "МегаФон", "domain": "megafon.ru", "category": "Telecom", "plans": [
+    { "name": "МегаФон Плюс", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+    { "name": "МТС", "domain": "mts.ru", "category": "Telecom" },
+  { "name": "Иви", "domain": "www.ivi.ru", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 2990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Okko", "domain": "www.okko.tv", "category": "Entertainment", "plans": [
+    { "name": "Оптимум", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Премиум", "cost": 799, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Wink", "domain": "www.wink.ru", "category": "Entertainment", "plans": [
+    { "name": "Трансформер", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Премиум", "cost": 899, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Start", "domain": "www.start.ru", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "KION", "domain": "www.kion.ru", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 249, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "PREMIER", "domain": "www.premier.one", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Амедиатека", "domain": "www.amediateka.ru", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 599, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 4999, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Viju", "domain": "www.viju.ru", "category": "Entertainment", "plans": [
+    { "name": "Месяц", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Триколор Кино и ТВ", "domain": "www.kino.tricolor.tv", "category": "Entertainment", "plans": [
+    { "name": "Единый Ultra (Год)", "cost": 2500, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Звук", "domain": "www.zvuk.com", "category": "Music", "plans": [
+    { "name": "Месяц", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "VK Музыка", "domain": "music.vk.com", "category": "Music", "plans": [
+    { "name": "Студенческая", "cost": 85, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Обычная", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "МТС Music", "domain": "music.mts.ru", "category": "Music", "plans": [
+    { "name": "Месяц", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Строки", "domain": "stroki.mts.ru", "category": "Education & Books", "plans": [
+    { "name": "Чуть-чуть", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Много", "cost": 549, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Больше всех", "cost": 899, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Литрес", "domain": "www.litres.ru", "category": "Education & Books", "plans": [
+    { "name": "Подписка", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "MyBook", "domain": "mybook.ru", "category": "Education & Books", "plans": [
+    { "name": "Стандарт", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Премиум", "cost": 549, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Ozon Premium", "domain": "ozon.ru", "category": "E-commerce", "plans": [
+    { "name": "Месяц", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 1790, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "X5 Пакет", "domain": "x5paket.ru", "category": "E-commerce", "plans": [
+    { "name": "Месяц", "cost": 120, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Магнит Плюс", "domain": "magnit.ru", "category": "E-commerce", "plans": [
+    { "name": "Премиум", "cost": 99, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ВкусВилл", "domain": "vkusvill.ru", "category": "Food & Delivery", "plans": [
+    { "name": "Подписка на скидку 10%", "cost": 490, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Лента Плюс", "domain": "lenta.com", "category": "E-commerce", "plans": [
+    { "name": "Супервыгода", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Grow Food", "domain": "www.growfood.pro", "category": "Food & Delivery", "plans": [
+    { "name": "Daily (Неделя)", "cost": 7500, "currency": "RUB", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Level Kitchen", "domain": "www.levelkitchen.com", "category": "Food & Delivery", "plans": [
+    { "name": "Снижение (Неделя)", "cost": 7200, "currency": "RUB", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "My Food", "domain": "www.m-food.ru", "category": "Food & Delivery", "plans": [
+    { "name": "Classic (Неделя)", "cost": 4500, "currency": "RUB", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Chefmarket", "domain": "www.chefmarket.ru", "category": "Food & Delivery", "plans": [
+    { "name": "3 ужина на двоих", "cost": 3500, "currency": "RUB", "periodUnit": "week", "periodQty": 1 }
+  ]},
+  { "name": "Elementaree", "domain": "www.elementaree.ru", "category": "Food & Delivery", "plans": [
+    { "name": "3 ужина на двоих", "cost": 3000, "currency": "RUB", "periodUnit": "week", "periodQty": 1 }
+  ]},
   { "name": "Dostaевский", "domain": "www.dostaevsky.ru", "category": "Food & Delivery" },
-  { "name": "DDX Fitness", "domain": "www.ddxfitness.ru", "category": "Health & Fitness" },
+  { "name": "DDX Fitness", "domain": "www.ddxfitness.ru", "category": "Health & Fitness", "plans": [
+    { "name": "Infinity", "cost": 2300, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Smart", "cost": 1700, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "World Class", "domain": "www.worldclass.ru", "category": "Health & Fitness" },
   { "name": "X-Fit", "domain": "www.xfit.ru", "category": "Health & Fitness" },
-  { "name": "Spirit. Fitness", "domain": "www.spiritfitness.ru", "category": "Health & Fitness" },
-  { "name": "Fitmost", "domain": "www.fitmost.ru", "category": "Health & Fitness" },
-  { "name": "СберЗдоровье", "domain": "www.sberhealth.ru", "category": "Health & Fitness" },
-  { "name": "BestDoctor", "domain": "www.bestdoctor.ru", "category": "Health & Fitness" },
+  { "name": "Spirit. Fitness", "domain": "www.spiritfitness.ru", "category": "Health & Fitness", "plans": [
+    { "name": "Месяц", "cost": 1990, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Fitmost", "domain": "www.fitmost.ru", "category": "Health & Fitness", "plans": [
+    { "name": "60 баллов", "cost": 3990, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "СберЗдоровье", "domain": "www.sberhealth.ru", "category": "Health & Fitness", "plans": [
+    { "name": "Все врачи онлайн", "cost": 4990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "BestDoctor", "domain": "luchi.ru", "category": "Health & Fitness" },
   { "name": "Checkme", "domain": "www.checkme.ru", "category": "Health & Fitness" },
-  { "name": "Flo Premium", "domain": "www.flo.health/ru", "category": "Health & Fitness" },
-  { "name": "Prosto", "domain": "www.prostoapp.com", "category": "Health & Fitness" },
-  { "name": "VK Play Cloud", "domain": "www.vkplay.ru/cloud", "category": "Gaming" },
-  { "name": "MTS Remote Play", "domain": "www.foggy.mts.ru", "category": "Gaming" },
-  { "name": "Lesta Games", "domain": "www.lesta.ru", "category": "Gaming" },
-  { "name": "Genshin Impact", "domain": "www.genshin.hoyoverse.com", "category": "Gaming" },
-  { "name": "Telegram Premium", "domain": "www.telegram.org/premium", "category": "Social" },
-  { "name": "Kaspersky", "domain": "www.kaspersky.ru", "category": "Software" },
-  { "name": "Dr.Web", "domain": "www.drweb.ru", "category": "Software" },
+  { "name": "Flo Premium", "domain": "www.flo.health", "category": "Health & Fitness", "plans": [
+    { "name": "Premium (Год)", "cost": 1299, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Prosto", "domain": "www.prostoapp.ru", "category": "Health & Fitness", "plans": [
+    { "name": "Месяц", "cost": 379, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 2990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "VK Play Cloud", "domain": "vkplay.ru", "category": "Gaming", "plans": [
+    { "name": "Комфорт", "cost": 999, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Премиум", "cost": 3599, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "MTS Remote Play", "domain": "remoteplay.mts.ru", "category": "Gaming" },
+  { "name": "Lesta Games", "domain": "lesta.ru", "category": "Gaming", "plans": [
+    { "name": "Премиум (30 дней)", "cost": 550, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Genshin Impact", "domain": "genshin.hoyoverse.com", "category": "Gaming", "plans": [
+    { "name": "Благословение полой луны", "cost": 449, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Telegram Premium", "domain": "www.telegram.org", "category": "Social", "plans": [
+    { "name": "Месяц", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 1990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Kaspersky", "domain": "www.kaspersky.ru", "category": "Software", "plans": [
+    { "name": "Standard 1 ПК", "cost": 1199, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Dr.Web", "domain": "www.drweb.ru", "category": "Software", "plans": [
+    { "name": "Security Space", "cost": 1090, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
   { "name": "Selectel", "domain": "www.selectel.ru", "category": "Software" },
-  { "name": "Yandex Cloud", "domain": "www.cloud.yandex.ru", "category": "Software" },
-  { "name": "Яндекс Go", "domain": "www.taxi.yandex.ru", "category": "Transport & Auto" },
-  { "name": "Делимобиль", "domain": "www.delimobil.ru", "category": "Transport & Auto" },
+  { "name": "Yandex Cloud", "domain": "yandex.cloud", "category": "Software" },
+  { "name": "Делимобиль", "domain": "www.delimobil.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Сказка", "cost": 1999, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Ситидрайв", "domain": "www.citydrive.ru", "category": "Transport & Auto" },
-  { "name": "Whoosh", "domain": "www.whoosh-bike.ru", "category": "Transport & Auto" },
-  { "name": "Urent", "domain": "www.urent.ru", "category": "Transport & Auto" },
-  { "name": "Тройка", "domain": "www.mosmetro.ru", "category": "Transport & Auto" },
+  { "name": "Whoosh", "domain": "www.whoosh-bike.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Whoosh Pass", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Urent", "domain": "www.urent.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Urent Plus", "cost": 149, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Тройка", "domain": "www.mosmetro.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Единый (30 дней)", "cost": 2730, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Единый (365 дней)", "cost": 20500, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
   { "name": "РЖД Бонус", "domain": "www.rzd-bonus.ru", "category": "Transport & Auto" },
-  { "name": "Аэрофлот Бонус", "domain": "www.aeroflot.ru/ru-ru/afl_bonus", "category": "Transport & Auto" },
+  { "name": "Аэрофлот Бонус", "domain": "www.aeroflot.ru", "category": "Transport & Auto" },
   { "name": "Skyeng", "domain": "www.skyeng.ru", "category": "Education & Books" },
   { "name": "Skillbox", "domain": "www.skillbox.ru", "category": "Education & Books" },
   { "name": "GeekBrains", "domain": "www.gb.ru", "category": "Education & Books" },
-  { "name": "Яндекс Практикум", "domain": "www.practicum.yandex.ru", "category": "Education & Books" },
-  { "name": "Stepik", "domain": "www.stepik.org", "category": "Education & Books" },
-  { "name": "Учи.ру", "domain": "www.uchi.ru", "category": "Education & Books" },
+  { "name": "Яндекс Практикум", "domain": "practicum.yandex.ru", "category": "Education & Books" },
+  { "name": "Stepik", "domain": "www.stepik.org", "category": "Education & Books", "plans": [
+    { "name": "Stepik Plus", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Учи.ру", "domain": "www.uchi.ru", "category": "Education & Books", "plans": [
+    { "name": "Полный доступ (Год)", "cost": 1990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
   { "name": "Skysmart", "domain": "www.skysmart.ru", "category": "Education & Books" },
   { "name": "Четыре Лапы", "domain": "www.4lapy.ru", "category": "Pets" },
   { "name": "Petshop", "domain": "www.petshop.ru", "category": "Pets" },
-  { "name": "Doggy Eat", "domain": "www.doggy-eat.ru", "category": "Pets" },
   { "name": "Flowwow", "domain": "www.flowwow.com", "category": "E-commerce" },
-  { "name": "Level One", "domain": "www.levelvan.ru", "category": "Education & Books" },
-  { "name": "Правое полушарие интроверта", "domain": "www.artforintrovert.ru", "category": "Education & Books" },
-  { "name": "Яндекс Плюс BY", "domain": "www.plus.yandex.by", "category": "E-commerce" },
+  { "name": "Level One", "domain": "www.levelvan.ru", "category": "Education & Books", "plans": [
+    { "name": "Подписка", "cost": 990, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Правое полушарие интроверта", "domain": "www.artforintrovert.ru", "category": "Education & Books", "plans": [
+    { "name": "Месяц", "cost": 300, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Год", "cost": 1500, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
   { "name": "Е-доставка", "domain": "www.e-dostavka.by", "category": "Food & Delivery" },
   { "name": "21vek.by", "domain": "www.21vek.by", "category": "E-commerce" },
-  { "name": "VOKA TV", "domain": "www.voka.tv", "category": "Entertainment" },
-  { "name": "ZALA.by", "domain": "www.zala.by", "category": "Telecom" },
-  { "name": "МТС ТВ BY", "domain": "www.mts.by/tv", "category": "Entertainment" },
+  { "name": "VOKA TV", "domain": "www.voka.tv", "category": "Entertainment", "plans": [
+    { "name": "Всё включено", "cost": 14.90, "currency": "BYN", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ZALA.by", "domain": "www.zala.by", "category": "Telecom", "plans": [
+    { "name": "ZALA: Все включено", "cost": 16.50, "currency": "BYN", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "МТС ТВ BY", "domain": "www.mts.by/tv", "category": "Entertainment", "plans": [
+    { "name": "Вся базовая", "cost": 10.90, "currency": "BYN", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "A1 BY", "domain": "www.a1.by", "category": "Telecom" },
-  { "name": "МТС BY", "domain": "www.mts.by", "category": "Telecom" },
-  { "name": "Колобайк", "domain": "www.kolobike.by", "category": "Transport & Auto" },
-  { "name": "Eleven BY", "domain": "www.eleven.by", "category": "Transport & Auto" },
-  { "name": "Megogo", "domain": "www.megogo.net/ua", "category": "Entertainment" },
-  { "name": "Sweet.tv", "domain": "www.sweet.tv", "category": "Entertainment" },
+  { "name": "МТС BY", "domain": "www.mts.by", "category": "Telecom", "plans": [
+    { "name": "Безлимитище X", "cost": 29.90, "currency": "BYN", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Eleven BY", "domain": "www.eleven.by", "category": "Transport & Auto", "plans": [
+    { "name": "Eleven Pass", "cost": 9.90, "currency": "BYN", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Megogo", "domain": "megogo.net", "category": "Entertainment", "plans": [
+    { "name": "Легка", "cost": 129, "currency": "UAH", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Оптимальна", "cost": 199, "currency": "UAH", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Максимальна", "cost": 399, "currency": "UAH", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Sweet.tv", "domain": "www.sweet.tv", "category": "Entertainment", "plans": [
+    { "name": "Тариф M", "cost": 129, "currency": "UAH", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Тариф L", "cost": 197, "currency": "UAH", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Liki24", "domain": "www.liki24.com", "category": "Health & Fitness" },
-  { "name": "Rozetka Premium", "domain": "www.rozetka.com.ua/premium", "category": "E-commerce" },
+  { "name": "Rozetka Premium", "domain": "www.rozetka.com.ua", "category": "E-commerce" },
   { "name": "Silpo", "domain": "www.silpo.ua", "category": "E-commerce" },
   { "name": "Monobank", "domain": "www.monobank.ua", "category": "Finance" },
   { "name": "Приват24", "domain": "www.privatbank.ua", "category": "Finance" },
   { "name": "Дія", "domain": "www.diia.gov.ua", "category": "Software" },
   { "name": "Kaspi.kz", "domain": "www.kaspi.kz", "category": "Finance" },
-  { "name": "Яндекс Плюс KZ", "domain": "www.plus.yandex.kz", "category": "E-commerce" },
   { "name": "Halyk Club", "domain": "www.halykbank.kz", "category": "Finance" },
   { "name": "Forte Club", "domain": "www.forte.kz", "category": "Finance" },
-  { "name": "BeeTV KZ", "domain": "www.beetv.kz", "category": "Entertainment" },
-  { "name": "TV+ Kazakhtelecom", "domain": "www.telecom.kz", "category": "Telecom" },
+  { "name": "BeeTV KZ", "domain": "www.beetv.kz", "category": "Entertainment", "plans": [
+    { "name": "Premium", "cost": 1490, "currency": "KZT", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "TV+ Kazakhtelecom", "domain": "www.telecom.kz", "category": "Telecom", "plans": [
+    { "name": "TV+ Start", "cost": 1700, "currency": "KZT", "periodUnit": "month", "periodQty": 1 }
+  ]},
   { "name": "Choco", "domain": "www.chocolife.me", "category": "E-commerce" },
-  { "name": "Jet KZ", "domain": "www.jet.rent", "category": "Transport & Auto" },
   { "name": "Mycar.kz", "domain": "www.mycar.kz", "category": "Transport & Auto" },
-  { "name": "Altel KZ", "domain": "www.altel.kz", "category": "Telecom" },
-  { "name": "Kcell KZ", "domain": "www.kcell.kz", "category": "Telecom" }
+  { "name": "Altel KZ", "domain": "www.altel.kz", "category": "Telecom", "plans": [
+    { "name": "Жеке", "cost": 3490, "currency": "KZT", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Kcell KZ", "domain": "www.kcell.kz", "category": "Telecom", "plans": [
+    { "name": "Jaña", "cost": 3590, "currency": "KZT", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Билайн", "domain": "beeline.ru", "category": "Telecom", "plans": [
+    { "name": "Тариф UP", "cost": 650, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tele2", "domain": "tele2.ru", "category": "Telecom", "plans": [
+    { "name": "Мой онлайн+", "cost": 600, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Подписка MiXX S", "cost": 300, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Ростелеком", "domain": "rt.ru", "category": "Telecom", "plans": [
+    { "name": "Технологии выгоды", "cost": 850, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Дом.ру", "domain": "dom.ru", "category": "Telecom", "plans": [
+    { "name": "Интернет", "cost": 750, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Yota", "domain": "yota.ru", "category": "Telecom", "plans": [
+    { "name": "Конструктор (Смартфон)", "cost": 500, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "СберМобайл", "domain": "sbermobile.ru", "category": "Telecom" },
+  { "name": "ВТБ Мобайл", "domain": "vtbmobile.ru", "category": "Telecom" },
+  { "name": "Газпромбанк Мобайл", "domain": "gpbmobile.ru", "category": "Telecom" },
+  { "name": "МГТС", "domain": "mts.ru", "category": "Telecom", "plans": [
+    { "name": "Домашний Интернет", "cost": 500, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "ТТК", "domain": "ttk.ru", "category": "Telecom" },
+  { "name": "Акадо", "domain": "akado.ru", "category": "Telecom" },
+  { "name": "Яндекс 360", "domain": "360.yandex.ru", "category": "Software", "plans": [
+    { "name": "Премиум 1 ТБ", "cost": 349, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Премиум 1 ТБ (Год)", "cost": 2990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "Облако Mail.ru", "domain": "cloud.mail.ru", "category": "Software", "plans": [
+    { "name": "1 ТБ", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Купер", "domain": "kuper.ru", "category": "Food & Delivery" },
+  { "name": "Самокат", "domain": "samokat.ru", "category": "Food & Delivery" },
+  { "name": "Яндекс Драйв", "domain": "drive.yandex.ru", "category": "Transport & Auto" },
+  { "name": "BelkaCar", "domain": "belkacar.ru", "category": "Transport & Auto" },
+  { "name": "Велобайк", "domain": "velobike.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Доступ на 30 дней", "cost": 599, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Автодор (T-Pass)", "domain": "avtodor-tr.ru", "category": "Transport & Auto" },
+  { "name": "Подорожник", "domain": "podorozhnik.spb.ru", "category": "Transport & Auto", "plans": [
+    { "name": "Единый (Месяц)", "cost": 3620, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Мосэнергосбыт", "domain": "www.mosenergosbyt.ru", "category": "Utilities & Services" },
+  { "name": "ПИК-Комфорт", "domain": "pik-comfort.ru", "category": "Utilities & Services" },
+  { "name": "НТВ-Плюс", "domain": "ntvplus.ru", "category": "Entertainment", "plans": [
+    { "name": "Базовый Онлайн", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "RuTube", "domain": "rutube.ru", "category": "Entertainment" },
+  { "name": "Boosty", "domain": "boosty.to", "category": "Social" },
+  { "name": "VK Donut", "domain": "vk.com", "category": "Social" },
+  { "name": "Авито", "domain": "avito.ru", "category": "E-commerce" },
+  { "name": "ЦИАН", "domain": "cian.ru", "category": "Utilities & Services" },
+  { "name": "Auto.ru", "domain": "auto.ru", "category": "Transport & Auto" },
+  { "name": "Букмейт", "domain": "bookmate.ru", "category": "Education & Books", "plans": [
+    { "name": "Подписка", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "FitStars", "domain": "fitstars.ru", "category": "Health & Fitness", "plans": [
+    { "name": "Безлимит", "cost": 4990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+  ]},
+  { "name": "РБК Pro", "domain": "pro.rbc.ru", "category": "News & Media", "plans": [
+    { "name": "Месяц", "cost": 1100, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Ведомости", "domain": "vedomosti.ru", "category": "News & Media", "plans": [
+    { "name": "Подписка (Месяц)", "cost": 490, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Альфа-Смарт", "domain": "alfabank.ru", "category": "Finance", "plans": [
+    { "name": "Смарт", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Халва.Десятка", "domain": "halvacard.ru", "category": "Finance", "plans": [
+    { "name": "Подписка", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "AdGuard VPN", "domain": "adguard-vpn.com", "category": "Software", "plans": [
+    { "name": "1 Месяц", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Нетология", "domain": "netology.ru", "category": "Education & Books" },
+  { "name": "Фоксфорд", "domain": "foxford.ru", "category": "Education & Books" },
+  { "name": "Синхронизация", "domain": "synchronize.ru", "category": "Education & Books" },
+  { "name": "Mamba", "domain": "mamba.ru", "category": "Social", "plans": [
+    { "name": "VIP (30 дней)", "cost": 799, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Twinby", "domain": "twinby.com", "category": "Social", "plans": [
+    { "name": "Premium (Месяц)", "cost": 590, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Впрок", "domain": "vprok.ru", "category": "Food & Delivery" },
+  { "name": "Азбука Вкуса", "domain": "av.ru", "category": "Food & Delivery" },
+  { "name": "СБИС", "domain": "sbis.ru", "category": "Software" },
+  { "name": "Контур", "domain": "kontur.ru", "category": "Software" },
+  { "name": "МойСклад", "domain": "moysklad.ru", "category": "Software", "plans": [
+    { "name": "Базовый", "cost": 1000, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Tilda", "domain": "tilda.cc", "category": "Software", "plans": [
+    { "name": "Personal", "cost": 500, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Битрикс24", "domain": "bitrix24.ru", "category": "Software", "plans": [
+    { "name": "Базовый", "cost": 1990, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "amoCRM", "domain": "amocrm.ru", "category": "Software", "plans": [
+    { "name": "Базовый", "cost": 499, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]},
+  { "name": "Подари жизнь", "domain": "podari-zhizn.ru", "category": "Social", "plans": [
+    { "name": "Ежемесячное пожертвование", "cost": 500, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+  ]}
 ]
