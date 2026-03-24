@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { X, Upload, AlertCircle } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const ErrorMessage = ({ type }) => {
+  const { t } = useLanguage();
   if (!type) return null;
   
-  let text = "Поле обязательно для заполнения";
-  if (type === 'invalid_number') text = "Стоимость должна быть больше 0";
+  let text = t.reqField;
+  if (type === 'invalid_number') text = t.costError;
 
   return (
     <div className="flex items-center gap-1 text-red-500 text-xs mt-1 animate-pulse">
@@ -16,28 +18,100 @@ const ErrorMessage = ({ type }) => {
 };
 
 const SubscriptionForm = ({ onClose, onSave, initialData }) => {
+  const { t, currency: preferredCurrency } = useLanguage();
+
+  const allCurrencies = ['RUB', 'USD', 'EUR', 'BYN', 'KZT', 'UAH'];
+  const currencyLabels = {
+    RUB: '₽ (RUB)',
+    USD: '$ (USD)',
+    EUR: '€ (EUR)',
+    BYN: 'Br (BYN)',
+    KZT: '₸ (KZT)',
+    UAH: '₴ (UAH)'
+  };
+
+  // Оставляем только те валюты, которые есть в тарифах этой подписки (либо все для ручной подписки)
+  let availableCurrencies = initialData?.plans?.length > 0
+    ? Array.from(new Set(initialData.plans.map(p => p.currency)))
+    : [...allCurrencies];
+
+  // Пользователь всегда должен иметь возможность выбрать свою стандартную валюту
+  if (!availableCurrencies.includes(preferredCurrency)) {
+    availableCurrencies.push(preferredCurrency);
+  }
+
+  // На всякий случай добавляем текущую валюту подписки, если редактируем старую кастомную запись
+  if (initialData?.currency && !availableCurrencies.includes(initialData.currency)) {
+    availableCurrencies.push(initialData.currency);
+  }
+
   // Инициализация формы с подмешиванием значений по умолчанию
   const [formData, setFormData] = useState(() => {
+    let initialCurrency = preferredCurrency;
+
+    // Если предпочитаемая валюта недоступна для этого сервиса, выбираем первую доступную
+    if (!initialData?.id && initialData?.plans?.length > 0) {
+       const planCurrencies = initialData.plans.map(p => p.currency);
+       if (!planCurrencies.includes(preferredCurrency)) {
+         initialCurrency = planCurrencies[0];
+       }
+    }
+
     const defaultData = {
       id: null,
       name: '',
       cost: '',
-      currency: 'RUB',
+      currency: initialCurrency,
       periodQty: 1,
       periodUnit: 'month',
       startDate: new Date().toISOString().substr(0, 10),
       comment: '',
       logo: null,
-      status: 'Active'
+      status: 'Active',
+      planName: ''
     };
 
     if (initialData) {
-      return { ...defaultData, ...initialData, logo: initialData.logo || initialData.icon || null };
+      let initialCost = initialData.cost || defaultData.cost;
+      let initialCurrency = initialData.currency || defaultData.currency;
+      let initialPeriodQty = initialData.periodQty || defaultData.periodQty;
+      let initialPeriodUnit = initialData.periodUnit || defaultData.periodUnit;
+      let initialPlanName = initialData.planName || '';
+
+      // Подставляем первый тариф только если это новая подписка из списка (нет ID)
+      if (!initialData.id && initialData.plans && initialData.plans.length > 0) {
+        const initialPlans = initialData.plans.filter(p => p.currency === initialCurrency);
+        if (initialPlans.length > 0) {
+          const firstPlan = initialPlans[0];
+          initialCost = firstPlan.cost;
+          initialPeriodQty = firstPlan.periodQty || 1;
+          initialPeriodUnit = firstPlan.periodUnit || 'month';
+          initialPlanName = firstPlan.name;
+        }
+      }
+
+      return { 
+        ...defaultData, 
+        ...initialData, 
+        cost: initialCost, 
+        currency: initialCurrency, 
+        periodQty: initialPeriodQty, 
+        periodUnit: initialPeriodUnit, 
+        planName: initialPlanName,
+        logo: initialData.logo || initialData.icon || null 
+      };
     }
     return defaultData;
   });
 
+  // Показываем все доступные тарифы подписки (выбор тарифа сам переключит валюту)
+  const displayPlans = initialData?.plans || [];
+
   const [touched, setTouched] = useState({});
+  const [selectedPlan, setSelectedPlan] = useState(() => {
+    if (formData.planName) return formData.planName;
+    return 'custom';
+  });
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -52,7 +126,36 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Если меняем валюту, автоматически переключаемся на первый тариф в этой валюте (если он есть)
+    if (name === 'currency' && initialData?.plans) {
+      const plansInNewCurrency = initialData.plans.filter(p => p.currency === value);
+      if (plansInNewCurrency.length > 0) {
+        const firstPlan = plansInNewCurrency[0];
+        setFormData(prev => ({
+          ...prev,
+          currency: value,
+          cost: firstPlan.cost,
+          periodQty: firstPlan.periodQty || 1,
+          periodUnit: firstPlan.periodUnit || 'month',
+          planName: firstPlan.name
+        }));
+        setSelectedPlan(firstPlan.name);
+      } else {
+        // Если для выбранной валюты нет тарифов, переключаем на "Свой / Вручную"
+        setFormData(prev => ({ ...prev, currency: value, planName: '' }));
+        setSelectedPlan('custom');
+      }
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Если юзер начал вручную менять параметры тарифа - переключаем селектор на "Свой"
+    if (['cost', 'currency', 'periodQty', 'periodUnit'].includes(name) && selectedPlan !== 'custom') {
+      setSelectedPlan('custom');
+      setFormData(prev => ({ ...prev, planName: '' }));
+    }
   };
 
   const handleBlur = (e) => {
@@ -65,6 +168,27 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
       if (!value || parseInt(value) < 1) {
         setFormData(prev => ({ ...prev, periodQty: 1 }));
       }
+    }
+  };
+
+  const handlePlanChange = (e) => {
+    const planName = e.target.value;
+    setSelectedPlan(planName);
+    
+    if (planName !== 'custom' && displayPlans.length > 0) {
+      const plan = displayPlans.find(p => p.name === planName);
+      if (plan) {
+        setFormData(prev => ({
+          ...prev,
+          planName: plan.name,
+          cost: plan.cost,
+          currency: plan.currency,
+          periodQty: plan.periodQty || 1,
+          periodUnit: plan.periodUnit || 'month'
+        }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, planName: '' }));
     }
   };
 
@@ -116,17 +240,17 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl h-[80vh] flex flex-col overflow-hidden">
+        <div className="flex justify-between items-center mb-4 shrink-0">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-            {initialData && initialData.name ? 'Редактировать' : 'Новая подписка'}
+            {initialData && initialData.name ? t.editSub : t.newSub}
           </h2>
           <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
             <X size={24} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-4 flex-grow overflow-y-auto px-2 -mx-2 pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" noValidate>
           {/* Логотип */}
           <div className="flex justify-center mb-4">
             <label className="cursor-pointer flex flex-col items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition">
@@ -137,14 +261,14 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
                   <Upload size={24} className="text-gray-400" />
                 </div>
               )}
-              <span>Загрузить иконку</span>
+              <span>{t.uploadIcon}</span>
               <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
             </label>
           </div>
 
           {/* Название */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Название <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.nameLabel} <span className="text-red-500">*</span></label>
             <input 
               name="name"
               type="text" 
@@ -152,15 +276,34 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               className={getInputClass(getErrorType('name'))}
-              placeholder="Например, Netflix"
+              placeholder={t.namePlaceholder}
             />
             <ErrorMessage type={getErrorType('name')} />
           </div>
 
+          {/* Тарифный план (показывается только если в базе есть планы для этого сервиса) */}
+          {displayPlans.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.tariffPlan}</label>
+              <select 
+                value={selectedPlan}
+                onChange={handlePlanChange}
+                className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+              >
+                {displayPlans.map(plan => (
+                  <option key={plan.name} value={plan.name}>
+                    {plan.name} — {plan.cost} {plan.currency} / {plan.periodQty > 1 ? plan.periodQty + ' ' : ''}{plan.periodUnit === 'month' ? t.mo : plan.periodUnit === 'year' ? t.yr : plan.periodUnit === 'week' ? t.wk : t.d}
+                  </option>
+                ))}
+                <option value="custom">{t.customPlan}</option>
+              </select>
+            </div>
+          )}
+
           {/* Стоимость и Валюта */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Стоимость <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.costLabel} <span className="text-red-500">*</span></label>
               <input 
                 name="cost"
                 type="number" 
@@ -175,23 +318,23 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
               <ErrorMessage type={getErrorType('cost')} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Валюта</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.currencyLabel}</label>
               <select 
                 name="currency"
                 value={formData.currency}
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <option value="RUB">₽ (RUB)</option>
-                <option value="USD">$ (USD)</option>
-                <option value="EUR">€ (EUR)</option>
+                {availableCurrencies.map(c => (
+                  <option key={c} value={c}>{currencyLabels[c] || c}</option>
+                ))}
               </select>
             </div>
           </div>
 
           {/* Период */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Списание каждые</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.billingEvery}</label>
             <div className="flex gap-2">
               <input 
                 name="periodQty"
@@ -208,17 +351,17 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
                 onChange={handleChange}
                 className="flex-1 p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <option value="day">Дней</option>
-                <option value="week">Недель</option>
-                <option value="month">Месяцев</option>
-                <option value="year">Лет</option>
+                <option value="day">{t.days}</option>
+                <option value="week">{t.weeks}</option>
+                <option value="month">{t.months}</option>
+                <option value="year">{t.years}</option>
               </select>
             </div>
           </div>
 
           {/* Дата */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Первое списание <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t.firstPayment} <span className="text-red-500">*</span></label>
             <input 
               name="startDate"
               type="date" 
@@ -240,7 +383,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
           >
-            Сохранить
+            {t.saveBtn}
           </button>
         </form>
       </div>

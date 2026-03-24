@@ -1,17 +1,19 @@
 import React from 'react';
 import { Edit2, Trash2, PauseCircle, PlayCircle } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus }) => {
   const isPaused = sub.status === 'Paused';
+  const { t, language } = useLanguage();
 
   // Безопасный расчет следующего платежа
   const getNextPaymentDate = () => {
     try {
-      if (!sub.startDate) return 'Не указана';
+      if (!sub.startDate) return t.notSet;
       
       const start = new Date(sub.startDate);
       // Если дата некорректная
-      if (isNaN(start.getTime())) return 'Ошибка даты';
+      if (isNaN(start.getTime())) return t.dateError;
 
       const now = new Date();
       let next = new Date(start);
@@ -31,11 +33,23 @@ const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus }) => {
         safetyCounter++;
       }
 
-      // Если цикл крутился слишком долго (например, дата 1900 года), просто вернем что есть
-      return next.toLocaleDateString('ru-RU');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const nextPaymentDate = new Date(next);
+      nextPaymentDate.setHours(0, 0, 0, 0);
+      
+      const diffTime = nextPaymentDate - today;
+      const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      let daysString = "";
+      if (daysLeft === 0) daysString = t.today;
+      else if (daysLeft === 1) daysString = t.tomorrow;
+      else if (daysLeft > 1) daysString = t.inDays(daysLeft);
+
+      return `${next.toLocaleDateString(language === 'ru' ? 'ru-RU' : 'en-US')}${daysString}`;
     } catch (e) {
       console.error(e);
-      return 'Ошибка';
+      return t.error;
     }
   };
 
@@ -47,16 +61,23 @@ const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus }) => {
         </div>
         
         <div>
-          <h3 className="font-bold text-gray-800 dark:text-white">{sub.name || 'Без названия'}</h3>
+          <h3 className="font-bold text-gray-800 dark:text-white flex items-center flex-wrap gap-2">
+            <span>{sub.name || t.unnamed}</span>
+            {sub.planName && (
+              <span className="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                {sub.planName}
+              </span>
+            )}
+          </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {sub.cost} {sub.currency} / {sub.periodQty > 1 ? sub.periodQty : ''} {
-              sub.periodUnit === 'month' ? 'мес' :
-              sub.periodUnit === 'year' ? 'год' :
-              sub.periodUnit === 'week' ? 'нед' : 'дн'
+              sub.periodUnit === 'month' ? t.mo :
+              sub.periodUnit === 'year' ? t.yr :
+              sub.periodUnit === 'week' ? t.wk : t.d
             }
           </p>
           <p className="text-xs text-blue-500 dark:text-blue-400 mt-1">
-             След. оплата: {getNextPaymentDate()}
+             {t.nextPayment}: {getNextPaymentDate()}
           </p>
         </div>
       </div>
@@ -65,7 +86,7 @@ const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus }) => {
         <button 
           onClick={() => onToggleStatus(sub.id)} 
           className={`p-2 rounded-full transition-colors duration-300 ${isPaused ? 'text-green-500 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-orange-400 dark:text-orange-300 bg-orange-50 dark:bg-orange-900/30'}`}
-          title={isPaused ? "Возобновить" : "Приостановить"}
+          title={isPaused ? t.resume : t.pause}
         >
           {isPaused ? <PlayCircle size={18} /> : <PauseCircle size={18} />}
         </button>

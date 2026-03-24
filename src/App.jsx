@@ -5,12 +5,33 @@ import SubscriptionForm from './components/SubscriptionForm';
 import SubscriptionCard from './components/SubscriptionCard';
 import SettingsModal from './components/SettingsModal';
 import PopularSubscriptions from './components/PopularSubscriptions';
+import { useLanguage } from './components/LanguageContext';
+import servicesList from './assets/services.json';
 
 function App() {
   const [subscriptions, setSubscriptions] = useState(() => {
     try {
       const saved = localStorage.getItem('subs_data');
-      return saved ? JSON.parse(saved) : [];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Ретроактивно добавляем planName для старых подписок
+        return parsed.map(sub => {
+          if (!sub.planName) {
+            const service = servicesList.find(s => s.name === sub.name);
+            if (service && service.plans) {
+              const matchedPlan = service.plans.find(p => 
+                parseFloat(p.cost) === parseFloat(sub.cost) && 
+                p.currency === sub.currency && 
+                (p.periodQty || 1) == (sub.periodQty || 1) && 
+                (p.periodUnit || 'month') === sub.periodUnit
+              );
+              if (matchedPlan) return { ...sub, planName: matchedPlan.name };
+            }
+          }
+          return sub;
+        });
+      }
+      return [];
     } catch (e) {
       return [];
     }
@@ -24,6 +45,7 @@ function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('app_theme') || 'system';
   });
+  const { t } = useLanguage();
 
   useEffect(() => {
     localStorage.setItem('subs_data', JSON.stringify(subscriptions));
@@ -107,8 +129,8 @@ function App() {
 
         if (subsDueTomorrow.length > 0) {
           const names = subsDueTomorrow.map(s => s.name).join(', ');
-          new Notification("Скоро оплата", {
-            body: `Завтра списание: ${names}. Проверьте баланс!`,
+          new Notification(t.notifTitle, {
+            body: `${t.notifBody1} ${names}. ${t.notifBody2}`,
             icon: '/pwa-192x192.png'
           });
         }
@@ -121,7 +143,7 @@ function App() {
     checkAndNotify();
     const intervalId = setInterval(checkAndNotify, 60000); 
     return () => clearInterval(intervalId);
-  }, [subscriptions]);
+  }, [subscriptions, t]);
 
   const handleAddOrUpdate = (subData) => {
     // Дополнительная валидация перед сохранением
@@ -139,7 +161,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    if (confirm('Вы уверены, что хотите удалить эту подписку?')) {
+    if (confirm(t.deleteConfirm)) {
       setSubscriptions(prev => prev.filter(s => s.id !== id));
     }
   };
@@ -173,7 +195,7 @@ function App() {
   return (
     <div className="min-h-screen pb-24 max-w-lg mx-auto bg-gray-50 dark:bg-gray-900 sm:border-x sm:border-gray-200 dark:sm:border-gray-800 transition-colors duration-300">
       <header className="p-6 bg-white dark:bg-gray-900 sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center transition-colors duration-300">
-        <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">Мои подписки</h1>
+        <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">{t.mySubs}</h1>
         <div className="flex items-center gap-4">
           <button onClick={() => setIsSettingsOpen(true)} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition">
             <Settings size={20} />
@@ -186,13 +208,13 @@ function App() {
         <Analytics subscriptions={subscriptions} />
 
         <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-gray-700 dark:text-gray-200">Список ({subscriptions.length})</h2>
+          <h2 className="font-bold text-gray-700 dark:text-gray-200">{t.list} ({subscriptions.length})</h2>
         </div>
 
         {subscriptions.length === 0 ? (
           <div className="text-center text-gray-400 dark:text-gray-500 mt-10">
-            <p>Нет активных подписок</p>
-            <p className="text-sm">Нажмите +, чтобы добавить</p>
+            <p>{t.noActiveSubs}</p>
+            <p className="text-sm">{t.clickPlus}</p>
           </div>
         ) : (
           subscriptions.map(sub => (
@@ -228,9 +250,9 @@ function App() {
 
       {isPopularSubsOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Выбрать популярную подписку</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl h-[80vh] flex flex-col overflow-hidden">
+            <div className="flex justify-between items-center mb-4 shrink-0">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">{t.selectPopular}</h3>
               <button onClick={() => setIsPopularSubsOpen(false)} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
                 <X size={24} />
               </button>
