@@ -20,19 +20,48 @@ const ErrorMessage = ({ type }) => {
 const SubscriptionForm = ({ onClose, onSave, initialData }) => {
   const { t, currency: preferredCurrency } = useLanguage();
 
-  // Отбираем планы, отдавая приоритет выбранной региональной валюте
-  const displayPlans = initialData?.plans ? (() => {
-    const regionalPlans = initialData.plans.filter(p => p.currency === preferredCurrency);
-    return regionalPlans.length > 0 ? regionalPlans : initialData.plans;
-  })() : [];
+  const allCurrencies = ['RUB', 'USD', 'EUR', 'BYN', 'KZT', 'UAH'];
+  const currencyLabels = {
+    RUB: '₽ (RUB)',
+    USD: '$ (USD)',
+    EUR: '€ (EUR)',
+    BYN: 'Br (BYN)',
+    KZT: '₸ (KZT)',
+    UAH: '₴ (UAH)'
+  };
+
+  // Оставляем только те валюты, которые есть в тарифах этой подписки (либо все для ручной подписки)
+  let availableCurrencies = initialData?.plans?.length > 0
+    ? Array.from(new Set(initialData.plans.map(p => p.currency)))
+    : [...allCurrencies];
+
+  // Пользователь всегда должен иметь возможность выбрать свою стандартную валюту
+  if (!availableCurrencies.includes(preferredCurrency)) {
+    availableCurrencies.push(preferredCurrency);
+  }
+
+  // На всякий случай добавляем текущую валюту подписки, если редактируем старую кастомную запись
+  if (initialData?.currency && !availableCurrencies.includes(initialData.currency)) {
+    availableCurrencies.push(initialData.currency);
+  }
 
   // Инициализация формы с подмешиванием значений по умолчанию
   const [formData, setFormData] = useState(() => {
+    let initialCurrency = preferredCurrency;
+
+    // Если предпочитаемая валюта недоступна для этого сервиса, выбираем первую доступную
+    if (!initialData?.id && initialData?.plans?.length > 0) {
+       const planCurrencies = initialData.plans.map(p => p.currency);
+       if (!planCurrencies.includes(preferredCurrency)) {
+         initialCurrency = planCurrencies[0];
+       }
+    }
+
     const defaultData = {
       id: null,
       name: '',
       cost: '',
-      currency: preferredCurrency,
+      currency: initialCurrency,
       periodQty: 1,
       periodUnit: 'month',
       startDate: new Date().toISOString().substr(0, 10),
@@ -50,13 +79,15 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
       let initialPlanName = initialData.planName || '';
 
       // Подставляем первый тариф только если это новая подписка из списка (нет ID)
-      if (!initialData.id && displayPlans.length > 0) {
-        const firstPlan = displayPlans[0];
-        initialCost = firstPlan.cost;
-        initialCurrency = firstPlan.currency;
-        initialPeriodQty = firstPlan.periodQty || 1;
-        initialPeriodUnit = firstPlan.periodUnit || 'month';
-        initialPlanName = firstPlan.name;
+      if (!initialData.id && initialData.plans && initialData.plans.length > 0) {
+        const initialPlans = initialData.plans.filter(p => p.currency === initialCurrency);
+        if (initialPlans.length > 0) {
+          const firstPlan = initialPlans[0];
+          initialCost = firstPlan.cost;
+          initialPeriodQty = firstPlan.periodQty || 1;
+          initialPeriodUnit = firstPlan.periodUnit || 'month';
+          initialPlanName = firstPlan.name;
+        }
       }
 
       return { 
@@ -73,10 +104,12 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
     return defaultData;
   });
 
+  // Показываем все доступные тарифы подписки (выбор тарифа сам переключит валюту)
+  const displayPlans = initialData?.plans || [];
+
   const [touched, setTouched] = useState({});
   const [selectedPlan, setSelectedPlan] = useState(() => {
-    if (formData.planName && displayPlans.some(p => p.name === formData.planName)) return formData.planName;
-    if (!initialData?.id && displayPlans.length > 0) return displayPlans[0].name;
+    if (formData.planName) return formData.planName;
     return 'custom';
   });
 
@@ -93,6 +126,29 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Если меняем валюту, автоматически переключаемся на первый тариф в этой валюте (если он есть)
+    if (name === 'currency' && initialData?.plans) {
+      const plansInNewCurrency = initialData.plans.filter(p => p.currency === value);
+      if (plansInNewCurrency.length > 0) {
+        const firstPlan = plansInNewCurrency[0];
+        setFormData(prev => ({
+          ...prev,
+          currency: value,
+          cost: firstPlan.cost,
+          periodQty: firstPlan.periodQty || 1,
+          periodUnit: firstPlan.periodUnit || 'month',
+          planName: firstPlan.name
+        }));
+        setSelectedPlan(firstPlan.name);
+      } else {
+        // Если для выбранной валюты нет тарифов, переключаем на "Свой / Вручную"
+        setFormData(prev => ({ ...prev, currency: value, planName: '' }));
+        setSelectedPlan('custom');
+      }
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
     
     // Если юзер начал вручную менять параметры тарифа - переключаем селектор на "Свой"
@@ -269,12 +325,9 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
                 onChange={handleChange}
                 className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               >
-                <option value="RUB">₽ (RUB)</option>
-                <option value="USD">$ (USD)</option>
-                <option value="EUR">€ (EUR)</option>
-                <option value="BYN">Br (BYN)</option>
-                <option value="KZT">₸ (KZT)</option>
-                <option value="UAH">₴ (UAH)</option>
+                {availableCurrencies.map(c => (
+                  <option key={c} value={c}>{currencyLabels[c] || c}</option>
+                ))}
               </select>
             </div>
           </div>
