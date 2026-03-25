@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Bell, Search, X, Settings, Filter, Calendar, DollarSign, ArrowUp, ArrowDown } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Analytics from './components/Analytics';
 import SubscriptionForm from './components/SubscriptionForm';
 import SubscriptionCard from './components/SubscriptionCard';
