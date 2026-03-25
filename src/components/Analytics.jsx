@@ -1,60 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Calculator } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calculator, DollarSign, Euro } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
-// Базовые курсы валют (относительно USD), если нет интернета
-const FALLBACK_RATES = {
-  USD: 1,
-  RUB: 92.5,
-  EUR: 0.92,
-  BYN: 3.25,
-  KZT: 450,
-  UAH: 39
-};
-
-const Analytics = ({ subscriptions }) => {
+const Analytics = ({ subscriptions, displayCurrency, setDisplayCurrency }) => {
   const [period, setPeriod] = useState('month'); // 'month' or 'year'
-  const { t, currency } = useLanguage();
-  const [rates, setRates] = useState(FALLBACK_RATES);
-
-  useEffect(() => {
-    const fetchRates = async () => {
-      const CACHE_KEY = 'exchange_rates_cache';
-      const CACHE_TIME_KEY = 'exchange_rates_timestamp';
-      const CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 часов в миллисекундах
-      
-      const cachedRates = localStorage.getItem(CACHE_KEY);
-      const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-      const now = Date.now();
-
-      // Если есть кэш и прошло менее 12 часов, используем его
-      if (cachedRates && cachedTime && (now - parseInt(cachedTime, 10) < CACHE_DURATION)) {
-        setRates(JSON.parse(cachedRates));
-        return;
-      }
-
-      try {
-        // Иначе запрашиваем свежие курсы (база - USD)
-        const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-        const data = await res.json();
-
-        if (data && data.rates) {
-          const newRates = { ...FALLBACK_RATES, ...data.rates };
-          setRates(newRates);
-          localStorage.setItem(CACHE_KEY, JSON.stringify(newRates));
-          localStorage.setItem(CACHE_TIME_KEY, now.toString());
-        }
-      } catch (err) {
-        console.error('Не удалось загрузить курсы валют:', err);
-        // В случае ошибки (нет интернета) пробуем использовать старый (пусть и просроченный) кэш
-        if (cachedRates) {
-          setRates(JSON.parse(cachedRates));
-        }
-      }
-    };
-
-    fetchRates();
-  }, []);
+  const { t, currency: mainCurrency, rates } = useLanguage();
 
   // Фильтруем только активные подписки
   const activeSubs = subscriptions.filter(sub => sub.status === 'Active');
@@ -78,10 +28,10 @@ const Analytics = ({ subscriptions }) => {
       // Конвертация валют
       const subCurrency = sub.currency || 'RUB';
       const rateSub = rates[subCurrency] || 1;
-      const rateMain = rates[currency] || 1;
+      const rateDisplay = rates[displayCurrency] || 1;
       
       // Переводим стоимость подписки в базу (USD), а затем в целевую валюту
-      const convertedCost = (monthlyCost / rateSub) * rateMain;
+      const convertedCost = (monthlyCost / rateSub) * rateDisplay;
 
       return total + convertedCost;
     }, 0);
@@ -91,7 +41,29 @@ const Analytics = ({ subscriptions }) => {
   const displayTotal = period === 'month' ? total : total * 12;
 
   const currencySymbols = { RUB: '₽', USD: '$', EUR: '€', BYN: 'Br', KZT: '₸', UAH: '₴' };
-  const symbol = currencySymbols[currency] || currency;
+  const symbol = currencySymbols[displayCurrency] || displayCurrency;
+
+  const handleCurrencySwitch = () => {
+    if (displayCurrency === mainCurrency) {
+      setDisplayCurrency('USD');
+    } else if (displayCurrency === 'USD') {
+      setDisplayCurrency('EUR');
+    } else {
+      setDisplayCurrency(mainCurrency);
+    }
+  };
+
+  const getNextCurrencyIcon = () => {
+    const mainCurrencySymbol = currencySymbols[mainCurrency] || mainCurrency[0];
+
+    if (displayCurrency === mainCurrency) {
+      return <DollarSign size={24} />;
+    }
+    if (displayCurrency === 'USD') {
+      return <Euro size={24} />;
+    }
+    return <span className="font-bold text-2xl leading-none flex items-center justify-center h-full">{mainCurrencySymbol}</span>;
+  };
 
   return (
     <div className="bg-blue-600 dark:bg-blue-800 text-white p-6 rounded-2xl shadow-lg mb-6 transition-colors duration-300">
@@ -107,13 +79,22 @@ const Analytics = ({ subscriptions }) => {
             {t.activeSubs}: {activeSubs.length}
           </p>
         </div>
-        <button 
-          onClick={() => setPeriod(period === 'month' ? 'year' : 'month')}
-          className="bg-blue-500 dark:bg-blue-700 p-2 rounded-lg hover:bg-blue-400 dark:hover:bg-blue-600 transition"
-          title="Переключить период"
-        >
-          <Calculator size={24} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={handleCurrencySwitch}
+            className="bg-blue-500 dark:bg-blue-700 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-blue-400 dark:hover:bg-blue-600 transition"
+            title="Сменить валюту"
+          >
+            {getNextCurrencyIcon()}
+          </button>
+          <button 
+            onClick={() => setPeriod(period === 'month' ? 'year' : 'month')}
+            className="bg-blue-500 dark:bg-blue-700 p-2 rounded-lg hover:bg-blue-400 dark:hover:bg-blue-600 transition"
+            title="Переключить период"
+          >
+            <Calculator size={24} />
+          </button>
+        </div>
       </div>
     </div>
   );
