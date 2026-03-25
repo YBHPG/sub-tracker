@@ -62,6 +62,10 @@ en: {
     notifTitle: "Upcoming payment",
     notifBody1: "Payment due tomorrow:",
     notifBody2: "Check your balance!",
+    sortDate: "By date",
+    sortName: "Alphabetical",
+    sortPrice: "By price",
+    corsError: "Failed to load image from link (CORS block or invalid URL)",
     categories: {
         "All": "All",
         "Entertainment": "Entertainment",
@@ -151,6 +155,10 @@ ru: {
     notifTitle: "Скоро оплата",
     notifBody1: "Завтра списание:",
     notifBody2: "Проверьте баланс!",
+    sortDate: "По дате",
+    sortName: "По алфавиту",
+    sortPrice: "По стоимости",
+    corsError: "Не удалось загрузить картинку по ссылке (блокировка CORS или неверная ссылка)",
     categories: {
         "All": "Все",
         "Entertainment": "Развлечения",
@@ -174,6 +182,16 @@ ru: {
   }
 };
 
+// Базовые курсы валют (относительно USD), если нет интернета
+const FALLBACK_RATES = {
+  USD: 1,
+  RUB: 92.5,
+  EUR: 0.92,
+  BYN: 3.25,
+  KZT: 450,
+  UAH: 39
+};
+
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
@@ -191,6 +209,19 @@ export const LanguageProvider = ({ children }) => {
         return navigator.language.toLowerCase().startsWith('ru') ? 'RUB' : 'USD';
     });
 
+    const [rates, setRates] = useState(() => {
+        const cachedRates = localStorage.getItem('exchange_rates_cache');
+        if (cachedRates) {
+            try {
+                return JSON.parse(cachedRates);
+            } catch (e) {
+                console.error("Ошибка парсинга кэша валют:", e);
+                return FALLBACK_RATES;
+            }
+        }
+        return FALLBACK_RATES;
+    });
+
     useEffect(() => {
         localStorage.setItem('appLanguage', language);
     }, [language]);
@@ -199,13 +230,49 @@ export const LanguageProvider = ({ children }) => {
         localStorage.setItem('appCurrency', currency);
     }, [currency]);
 
+    useEffect(() => {
+      const fetchRates = async () => {
+        const CACHE_KEY = 'exchange_rates_cache';
+        const CACHE_TIME_KEY = 'exchange_rates_timestamp';
+        const CACHE_DURATION = 12 * 60 * 60 * 1000; // 12 часов в миллисекундах
+
+        const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+        const now = Date.now();
+
+        // Не запрашиваем, если кэш свежий
+        if (cachedTime && (now - parseInt(cachedTime, 10) < CACHE_DURATION)) {
+          return;
+        }
+
+        try {
+          // Запрашиваем свежие курсы (база - USD)
+          const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+          const data = await res.json();
+
+          if (data && data.rates) {
+            // Объединяем с текущими, чтобы не потерять валюты, если API их не вернет
+            const newRates = { ...rates, ...data.rates };
+            setRates(newRates);
+            localStorage.setItem(CACHE_KEY, JSON.stringify(newRates));
+            localStorage.setItem(CACHE_TIME_KEY, now.toString());
+          }
+        } catch (err) {
+          console.error('Не удалось загрузить курсы валют:', err);
+          // В случае ошибки остаемся на старых данных из кэша (или на FALLBACK_RATES)
+        }
+      };
+  
+      fetchRates();
+    }, []);
+
   const t = translations[language];
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, currency, setCurrency }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, currency, setCurrency, rates }}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = () => useContext(LanguageContext);

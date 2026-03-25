@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import servicesList from '../assets/services.json';
 import { useLanguage } from './LanguageContext';
@@ -28,6 +28,13 @@ const PopularSubscriptions = ({ onSelect, onCustom }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { t } = useLanguage();
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const filteredSubscriptions = popularSubscriptions.filter(sub => {
     const matchesCategory = selectedCategory === 'All' || sub.category === selectedCategory;

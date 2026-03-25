@@ -1,10 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Download, Upload, X, Monitor, Sun, Moon } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
 const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) => {
   const fileInputRef = useRef(null);
   const { language, setLanguage, t, currency, setCurrency } = useLanguage();
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   const handleExport = () => {
     const dataStr = JSON.stringify(subscriptions, null, 2);
@@ -33,7 +40,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
         } else {
           alert(t.importFormatError);
         }
-      } catch (error) {
+      } catch {
         alert(t.importReadError);
       }
     };
@@ -41,8 +48,11 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" onClick={onClose}>
+      <div 
+        className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">{t.settings}</h2>
           <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition">
@@ -124,7 +134,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
           <div className="grid grid-cols-2 gap-4">
             {/* Язык */}
             <div>
-              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.language}</h3>
+              <h3 className="text-[11px] sm:text-sm whitespace-nowrap font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight sm:tracking-wider mb-3">{t.language}</h3>
               <select 
                 value={language} 
                 onChange={(e) => setLanguage(e.target.value)}
@@ -137,7 +147,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
 
             {/* Валюта */}
             <div>
-              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-3">{t.mainCurrency}</h3>
+              <h3 className="text-[11px] sm:text-sm whitespace-nowrap font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight sm:tracking-wider mb-3">{t.mainCurrency}</h3>
               <select 
                 value={currency} 
                 onChange={(e) => setCurrency(e.target.value)}
@@ -152,6 +162,10 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
               </select>
             </div>
           </div>
+        </div>
+
+        <div className="text-center text-xs text-gray-400 dark:text-gray-500 mt-8">
+          Версия 0.3
         </div>
       </div>
     </div>
