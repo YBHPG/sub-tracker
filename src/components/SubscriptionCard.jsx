@@ -50,32 +50,60 @@ const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus, displayCurren
     try {
       if (!sub.startDate) return t.notSet;
       
-      const start = new Date(sub.startDate);
+      let start;
+      if (sub.startDate.includes('-')) {
+        const [y, m, d] = sub.startDate.split('-');
+        start = new Date(y, m - 1, d);
+      } else {
+        start = new Date(sub.startDate);
+      }
+      
       // Если дата некорректная
       if (isNaN(start.getTime())) return t.dateError;
 
       const now = new Date();
-      let next = new Date(start);
+      now.setHours(0, 0, 0, 0); // Сравниваем только по дате
       
       // ЗАЩИТА: Если количество периодов меньше 1 или не число, считаем как 1
       const qty = Math.max(1, parseInt(sub.periodQty) || 1);
       
-      // Страховка от зависания: ограничим цикл (например, не больше 1000 итераций)
-      let safetyCounter = 0;
+      let nextDate = new Date(start);
+      nextDate.setHours(0, 0, 0, 0);
+
+      let iterations = 0;
+      const startYear = start.getFullYear();
+      const startMonth = start.getMonth();
+      const startDay = start.getDate();
       
-      while (next < now && safetyCounter < 1000) {
-        if (sub.periodUnit === 'month') next.setMonth(next.getMonth() + qty);
-        else if (sub.periodUnit === 'year') next.setFullYear(next.getFullYear() + qty);
-        else if (sub.periodUnit === 'week') next.setDate(next.getDate() + (qty * 7));
-        else next.setDate(next.getDate() + qty);
+      // Вычисляем следующую дату отталкиваясь от стартовой, чтобы избежать сдвигов дней
+      while (nextDate < now && iterations < 10000) {
+        iterations++;
         
-        safetyCounter++;
+        if (sub.periodUnit === 'month') {
+          const targetMonth = startMonth + (iterations * qty);
+          nextDate = new Date(startYear, targetMonth, startDay);
+          const expectedMonth = ((targetMonth % 12) + 12) % 12;
+          if (nextDate.getMonth() !== expectedMonth) {
+            nextDate = new Date(startYear, targetMonth + 1, 0); 
+          }
+        } else if (sub.periodUnit === 'year') {
+          nextDate = new Date(startYear + (iterations * qty), startMonth, startDay);
+          if (startMonth === 1 && startDay === 29 && nextDate.getMonth() !== 1) {
+            nextDate = new Date(startYear + (iterations * qty), 2, 0); 
+          }
+        } else if (sub.periodUnit === 'week') {
+          nextDate = new Date(startYear, startMonth, startDay + (iterations * qty * 7));
+        } else {
+          nextDate = new Date(startYear, startMonth, startDay + (iterations * qty));
+        }
+        
+        nextDate.setHours(0, 0, 0, 0);
       }
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const nextPaymentDate = new Date(next);
-      nextPaymentDate.setHours(0, 0, 0, 0);
+      
+      const nextPaymentDate = new Date(nextDate);
       
       const diffTime = nextPaymentDate - today;
       const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -85,7 +113,7 @@ const SubscriptionCard = ({ sub, onEdit, onDelete, onToggleStatus, displayCurren
       else if (daysLeft === 1) daysString = t.tomorrow;
       else if (daysLeft > 1) daysString = t.inDays(daysLeft);
 
-      return `${next.toLocaleDateString(language === 'ru' ? 'ru-RU' : 'en-US')}${daysString}`;
+      return `${nextPaymentDate.toLocaleDateString(language === 'ru' ? 'ru-RU' : 'en-US')}${daysString}`;
     } catch (e) {
       console.error(e);
       return t.error;
