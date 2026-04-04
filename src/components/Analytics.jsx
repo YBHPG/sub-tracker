@@ -40,9 +40,14 @@ const Analytics = ({ subscriptions, displayCurrency, setDisplayCurrency }) => {
         
         if (isNaN(start.getTime())) return total;
 
-        let next = new Date(start);
+        let nextDate = new Date(start);
         const qty = Math.max(1, parseInt(sub.periodQty) || 1);
-        let safetyCounter = 0;
+        let iterations = 0;
+
+        // Извлекаем компоненты исходной даты для точного расчета
+        const startYear = start.getFullYear();
+        const startMonth = start.getMonth();
+        const startDay = start.getDate();
 
         // Определяем границу: конец текущего месяца или конец текущего года
         const endOfPeriod = period === 'month' 
@@ -50,21 +55,37 @@ const Analytics = ({ subscriptions, displayCurrency, setDisplayCurrency }) => {
           : new Date(currentYear, 11, 31, 23, 59, 59);
 
         // Математически "прогоняем" платежи от старта до конца периода
-        while (next <= endOfPeriod && safetyCounter < 100000) {
+        while (nextDate <= endOfPeriod && iterations < 100000) {
           const isMatch = period === 'month'
-            ? next.getMonth() === currentMonth && next.getFullYear() === currentYear
-            : next.getFullYear() === currentYear;
+            ? nextDate.getMonth() === currentMonth && nextDate.getFullYear() === currentYear
+            : nextDate.getFullYear() === currentYear;
 
           if (isMatch) {
             paymentCount++;
           }
 
-          if (sub.periodUnit === 'month') next.setMonth(next.getMonth() + qty);
-          else if (sub.periodUnit === 'year') next.setFullYear(next.getFullYear() + qty);
-          else if (sub.periodUnit === 'week') next.setDate(next.getDate() + (qty * 7));
-          else next.setDate(next.getDate() + qty);
-          
-          safetyCounter++;
+          iterations++;
+
+          // Вычисляем следующую дату, отталкиваясь от стартовой, чтобы не было сдвигов по дням в конце месяца
+          if (sub.periodUnit === 'month') {
+            const targetMonth = startMonth + (iterations * qty);
+            nextDate = new Date(startYear, targetMonth, startDay);
+            // Защита от перескока, если в месяце меньше дней (например 31 -> 28)
+            const expectedMonth = ((targetMonth % 12) + 12) % 12;
+            if (nextDate.getMonth() !== expectedMonth) {
+              nextDate = new Date(startYear, targetMonth + 1, 0); 
+            }
+          } else if (sub.periodUnit === 'year') {
+            nextDate = new Date(startYear + (iterations * qty), startMonth, startDay);
+            // Защита для 29 февраля
+            if (startMonth === 1 && startDay === 29 && nextDate.getMonth() !== 1) {
+              nextDate = new Date(startYear + (iterations * qty), 2, 0); 
+            }
+          } else if (sub.periodUnit === 'week') {
+            nextDate = new Date(startYear, startMonth, startDay + (iterations * qty * 7));
+          } else {
+            nextDate = new Date(startYear, startMonth, startDay + (iterations * qty));
+          }
         }
       } catch (e) {
         console.error(e);
