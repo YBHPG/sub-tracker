@@ -3,7 +3,7 @@ import { Trash2, PauseCircle, PlayCircle } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
 const PriceDisplay = ({ sub, displayCurrency, rates }) => {
-  const currencySymbols = { RUB: '₽', USD: '$', EUR: '€', BYN: 'Br', KZT: '₸', UAH: '₴' };
+  const currencySymbols = { RUB: '₽', USD: '$', EUR: '€', BYN: 'Br', KZT: '₸', UAH: '₴', TRY: '₺' };
   const subCost = parseFloat(sub.cost) || 0;
   const subCurrency = sub.currency;
   

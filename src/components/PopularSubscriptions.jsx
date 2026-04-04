@@ -3,8 +3,8 @@ import { Plus } from 'lucide-react';
 import servicesList from '../assets/services.json';
 import { useLanguage } from './LanguageContext';
 
-// Подтягиваем все скачанные локальные иконки из assets/icons на этапе сборки Vite
-const iconModules = import.meta.glob('../assets/icons/*.{png,jpg,jpeg,svg}', { eager: true, import: 'default' });
+// Подтягиваем пути ко всем иконкам из папки public/icons
+const iconModules = import.meta.glob('/public/icons/*.{png,jpg,jpeg,svg}', { eager: true, import: 'default' });
 
 // Собираем финальный список, находя правильную картинку для каждого сервиса
 const popularSubscriptions = servicesList.map(service => {

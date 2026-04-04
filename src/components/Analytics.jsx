@@ -10,37 +10,73 @@ const Analytics = ({ subscriptions, displayCurrency, setDisplayCurrency }) => {
   const activeSubs = subscriptions.filter(sub => sub.status === 'Active');
 
   const calculateTotal = () => {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
     return activeSubs.reduce((total, sub) => {
-      let monthlyCost = 0;
       const cost = parseFloat(sub.cost) || 0;
       
-      // Нормализация к месяцу
-      if (sub.periodUnit === 'month') {
-        monthlyCost = cost / sub.periodQty;
-      } else if (sub.periodUnit === 'year') {
-        monthlyCost = cost / (sub.periodQty * 12);
-      } else if (sub.periodUnit === 'week') {
-        monthlyCost = (cost / sub.periodQty) * 4.33; // В месяце примерно 4.33 недели
-      } else if (sub.periodUnit === 'day') {
-        monthlyCost = (cost / sub.periodQty) * 30;
-      }
-
       // Конвертация валют
       const subCurrency = sub.currency || 'RUB';
       const rateSub = rates[subCurrency] || 1;
       const rateDisplay = rates[displayCurrency] || 1;
       
-      // Переводим стоимость подписки в базу (USD), а затем в целевую валюту
-      const convertedCost = (monthlyCost / rateSub) * rateDisplay;
+      const convertedCost = (cost / rateSub) * rateDisplay;
 
-      return total + convertedCost;
+      let paymentCount = 0;
+
+      try {
+        if (!sub.startDate) return total;
+        
+        // Создаем дату безопасно (на случай если startDate = YYYY-MM-DD, чтобы избежать смещения таймзоны)
+        let start;
+        if (sub.startDate.includes('-')) {
+          const [y, m, d] = sub.startDate.split('-');
+          start = new Date(y, m - 1, d);
+        } else {
+          start = new Date(sub.startDate);
+        }
+        
+        if (isNaN(start.getTime())) return total;
+
+        let next = new Date(start);
+        const qty = Math.max(1, parseInt(sub.periodQty) || 1);
+        let safetyCounter = 0;
+
+        // Определяем границу: конец текущего месяца или конец текущего года
+        const endOfPeriod = period === 'month' 
+          ? new Date(currentYear, currentMonth + 1, 0, 23, 59, 59)
+          : new Date(currentYear, 11, 31, 23, 59, 59);
+
+        // Математически "прогоняем" платежи от старта до конца периода
+        while (next <= endOfPeriod && safetyCounter < 100000) {
+          const isMatch = period === 'month'
+            ? next.getMonth() === currentMonth && next.getFullYear() === currentYear
+            : next.getFullYear() === currentYear;
+
+          if (isMatch) {
+            paymentCount++;
+          }
+
+          if (sub.periodUnit === 'month') next.setMonth(next.getMonth() + qty);
+          else if (sub.periodUnit === 'year') next.setFullYear(next.getFullYear() + qty);
+          else if (sub.periodUnit === 'week') next.setDate(next.getDate() + (qty * 7));
+          else next.setDate(next.getDate() + qty);
+          
+          safetyCounter++;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      return total + (convertedCost * paymentCount);
     }, 0);
   };
 
-  const total = calculateTotal();
-  const displayTotal = period === 'month' ? total : total * 12;
+  const displayTotal = calculateTotal();
 
-  const currencySymbols = { RUB: '₽', USD: '$', EUR: '€', BYN: 'Br', KZT: '₸', UAH: '₴' };
+  const currencySymbols = { RUB: '₽', USD: '$', EUR: '€', BYN: 'Br', KZT: '₸', UAH: '₴', TRY: '₺' };
   const symbol = currencySymbols[displayCurrency] || displayCurrency;
 
   const handleCurrencySwitch = () => {
