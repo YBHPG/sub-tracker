@@ -13,6 +13,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      workbox: {
+        // Указываем воркеру закэшировать все возможные форматы картинок и других ассетов в папке dist
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 // Увеличиваем лимит кэширования одного файла до 5МБ
+      },
       manifest: {
         name: 'SubTracker',
         short_name: 'SubTracker',

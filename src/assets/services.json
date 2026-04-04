@@ -1,8 +1,11 @@
 [
   { "name": "Netflix", "domain": "www.netflix.com", "category": "Entertainment", "plans": [
-    { "name": "Standard with ads", "cost": 6.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Standard", "cost": 15.49, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Premium", "cost": 22.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+    { "name": "Standard (USD)", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium (USD)", "cost": 24.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Standard (EUR)", "cost": 13.49, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium (EUR)", "cost": 19.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Standart (TRY)", "cost": 229.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Özel (TRY)", "cost": 299.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Disney+", "domain": "www.disneyplus.com", "category": "Entertainment", "plans": [
     { "name": "Basic (With Ads)", "cost": 7.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
@@ -53,8 +56,9 @@
     { "name": "Ad-Free", "cost": 8.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Amazon Prime", "domain": "www.primevideo.com", "category": "E-commerce", "plans": [
-    { "name": "Monthly", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Annual", "cost": 139.00, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
+    { "name": "Monthly (USD)", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Monthly (EUR)", "cost": 8.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Aylık (TRY)", "cost": 39.00, "currency": "TRY", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Walmart+", "domain": "www.walmart.com/plus", "category": "E-commerce", "plans": [
     { "name": "Monthly", "cost": 12.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
@@ -223,22 +227,25 @@
     { "name": "Monthly Average", "cost": 260.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Xbox Game Pass", "domain": "www.xbox.com", "category": "Gaming", "plans": [
-    { "name": "PC", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Ultimate", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate (USD)", "cost": 19.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate (EUR)", "cost": 17.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Ultimate (TRY)", "cost": 309.00, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Ultimate (RU)", "cost": 1200, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "PlayStation Plus", "domain": "www.playstation.com", "category": "Gaming", "plans": [
-    { "name": "Essential", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Extra", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Premium", "cost": 17.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+    { "name": "Extra (USD)", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Extra (EUR)", "cost": 13.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Extra (TRY)", "cost": 260.00, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Extra (RU)", "cost": 900, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Nintendo Switch Online", "domain": "www.nintendo.com", "category": "Gaming", "plans": [
     { "name": "Individual Annual", "cost": 19.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 },
     { "name": "Family Annual", "cost": 34.99, "currency": "USD", "periodUnit": "year", "periodQty": 1 }
   ]},
   { "name": "Discord Nitro", "domain": "www.discord.com", "category": "Social", "plans": [
-    { "name": "Basic", "cost": 2.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Nitro", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Nitro (USD)", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Nitro (EUR)", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Nitro (TRY)", "cost": 104.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Nitro (RU)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Twitch Turbo", "domain": "www.twitch.tv", "category": "Gaming", "plans": [
@@ -249,8 +256,9 @@
     { "name": "Family", "cost": 25.95, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Google One", "domain": "one.google.com", "category": "Software", "plans": [
-    { "name": "Basic (100GB)", "cost": 1.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Premium (2TB)", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium 2TB (USD)", "cost": 9.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium 2TB (EUR)", "cost": 9.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Premium 2TB (TRY)", "cost": 57.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Basic 100GB (RU)", "cost": 139, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "ChatGPT Plus", "domain": "www.chatgpt.com", "category": "Software", "plans": [
@@ -266,22 +274,27 @@
     { "name": "All Apps", "cost": 59.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Canva Pro", "domain": "www.canva.com", "category": "Software", "plans": [
-    { "name": "Monthly", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Monthly (USD)", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Monthly (EUR)", "cost": 11.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Aylık (TRY)", "cost": 149.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Месяц (RU)", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Spotify Premium", "domain": "www.spotify.com", "category": "Music", "plans": [
-    { "name": "Individual", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Duo", "cost": 14.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Family", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
+    { "name": "Individual (USD)", "cost": 11.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Individual (EUR)", "cost": 10.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Bireysel (TRY)", "cost": 59.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Индивидуальная (RU)", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Apple Music", "domain": "music.apple.com", "category": "Music", "plans": [
-    { "name": "Individual", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Family", "cost": 16.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Individual (USD)", "cost": 10.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Individual (EUR)", "cost": 10.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Bireysel (TRY)", "cost": 39.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Индивидуальная (RU)", "cost": 169, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "YouTube Premium", "domain": "www.youtube.com", "category": "Entertainment", "plans": [
-    { "name": "Individual", "cost": 13.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Family", "cost": 22.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Individual (USD)", "cost": 13.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Individual (EUR)", "cost": 12.99, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Bireysel (TRY)", "cost": 57.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
     { "name": "Индивидуальная (RU)", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "BarkBox", "domain": "www.barkbox.com", "category": "Pets", "plans": [
@@ -554,12 +567,12 @@
     { "name": "Tree Subscription", "cost": 5.00, "currency": "USD", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Яндекс Плюс", "domain": "plus.yandex.ru", "category": "E-commerce", "plans": [
-    { "name": "Плюс (Месяц)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Плюс (Год)", "cost": 1990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+    { "name": "Плюс (Месяц)", "cost": 449, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Плюс (Год)", "cost": 3490, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
   ]},
   { "name": "СберПрайм", "domain": "www.sberbank.ru", "category": "E-commerce", "plans": [
-    { "name": "Прайм", "cost": 199, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Прайм+", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
+    { "name": "Прайм", "cost": 399, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Прайм+", "cost": 599, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "МТС Premium", "domain": "premium.mts.ru", "category": "Telecom", "plans": [
     { "name": "Месяц", "cost": 249, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
@@ -696,8 +709,10 @@
     { "name": "Благословение полой луны", "cost": 449, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Telegram Premium", "domain": "www.telegram.org", "category": "Social", "plans": [
-    { "name": "Месяц", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 },
-    { "name": "Год", "cost": 1990, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }
+    { "name": "Monthly (USD)", "cost": 4.99, "currency": "USD", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Monthly (EUR)", "cost": 5.49, "currency": "EUR", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Aylık (TRY)", "cost": 74.99, "currency": "TRY", "periodUnit": "month", "periodQty": 1 },
+    { "name": "Месяц (RU)", "cost": 299, "currency": "RUB", "periodUnit": "month", "periodQty": 1 }
   ]},
   { "name": "Kaspersky", "domain": "www.kaspersky.ru", "category": "Software", "plans": [
     { "name": "Standard 1 ПК", "cost": 1199, "currency": "RUB", "periodUnit": "year", "periodQty": 1 }

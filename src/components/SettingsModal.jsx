@@ -6,10 +6,28 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
   const fileInputRef = useRef(null);
   const { language, setLanguage, t, currency, setCurrency } = useLanguage();
 
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    const modalId = Math.random().toString(36).substring(2, 9);
+    window.history.pushState({ modalId }, '', window.location.href);
+
+    const handlePopState = () => {
+      if (onCloseRef.current) onCloseRef.current();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('popstate', handlePopState);
+      if (window.history.state && window.history.state.modalId === modalId) {
+        window.history.back();
+      }
     };
   }, []);
 
@@ -159,6 +177,7 @@ const SettingsModal = ({ onClose, subscriptions, onImport, theme, setTheme }) =>
                 <option value="BYN">Br (BYN)</option>
                 <option value="KZT">₸ (KZT)</option>
                 <option value="UAH">₴ (UAH)</option>
+                <option value="TRY">₺ (TRY)</option>
               </select>
             </div>
           </div>

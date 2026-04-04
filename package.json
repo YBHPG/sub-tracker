@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.554.0",
+    "playwright": "^1.59.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "vite-plugin-pwa": "^1.1.0"

@@ -189,7 +189,8 @@ const FALLBACK_RATES = {
   EUR: 0.92,
   BYN: 3.25,
   KZT: 450,
-  UAH: 39
+  UAH: 39,
+  TRY: 32.0
 };
 
 const LanguageContext = createContext();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Upload, AlertCircle } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
@@ -61,14 +61,15 @@ const processAndCompressImage = (src) => {
 const SubscriptionForm = ({ onClose, onSave, initialData }) => {
   const { t, currency: preferredCurrency } = useLanguage();
 
-  const allCurrencies = ['RUB', 'USD', 'EUR', 'BYN', 'KZT', 'UAH'];
+  const allCurrencies = ['RUB', 'USD', 'EUR', 'BYN', 'KZT', 'UAH', 'TRY'];
   const currencyLabels = {
     RUB: '₽ (RUB)',
     USD: '$ (USD)',
     EUR: '€ (EUR)',
     BYN: 'Br (BYN)',
     KZT: '₸ (KZT)',
-    UAH: '₴ (UAH)'
+    UAH: '₴ (UAH)',
+    TRY: '₺ (TRY)'
   };
 
   // Оставляем только те валюты, которые есть в тарифах этой подписки (либо все для ручной подписки)
@@ -150,11 +151,28 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
 
   const [touched, setTouched] = useState({});
 
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    const modalId = Math.random().toString(36).substring(2, 9);
+    window.history.pushState({ modalId }, '', window.location.href);
+
+    const handlePopState = () => {
+      if (onCloseRef.current) onCloseRef.current();
+    };
+
+    window.addEventListener('popstate', handlePopState);
 
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('popstate', handlePopState);
+      if (window.history.state && window.history.state.modalId === modalId) {
+        window.history.back();
+      }
     };
   }, []);
 
@@ -184,24 +202,26 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
     const { name, value } = e.target;
 
     // Если меняем валюту, автоматически переключаемся на первый тариф в этой валюте (если он есть)
-    if (name === 'currency' && initialData?.plans) {
-      const plansInNewCurrency = initialData.plans.filter(p => p.currency === value);
-      if (plansInNewCurrency.length > 0) {
-        const firstPlan = plansInNewCurrency[0];
-        setFormData(prev => ({
-          ...prev,
-          currency: value,
-          cost: firstPlan.cost,
-          periodQty: firstPlan.periodQty || 1,
-          periodUnit: firstPlan.periodUnit || 'month',
-          planName: firstPlan.name
-        }));
-        setSelectedPlan(firstPlan.name);
-      } else {
-        // Если для выбранной валюты нет тарифов, переключаем на "Свой / Вручную"
-        setFormData(prev => ({ ...prev, currency: value, planName: '' }));
-        setSelectedPlan('custom');
+    if (name === 'currency') {
+      if (initialData?.plans) {
+        const plansInNewCurrency = initialData.plans.filter(p => p.currency === value);
+        if (plansInNewCurrency.length > 0) {
+          const firstPlan = plansInNewCurrency[0];
+          setFormData(prev => ({
+            ...prev,
+            currency: value,
+            cost: firstPlan.cost,
+            periodQty: firstPlan.periodQty || 1,
+            periodUnit: firstPlan.periodUnit || 'month',
+            planName: firstPlan.name
+          }));
+          setSelectedPlan(firstPlan.name);
+          return;
+        }
       }
+      // Если для выбранной валюты нет тарифов (или их вообще нет), переключаем на "Свой / Вручную" и очищаем цену
+      setFormData(prev => ({ ...prev, currency: value, planName: '', cost: '' }));
+      setSelectedPlan('custom');
       return;
     }
 
@@ -244,7 +264,7 @@ const SubscriptionForm = ({ onClose, onSave, initialData }) => {
         }));
       }
     } else {
-      setFormData(prev => ({ ...prev, planName: '' }));
+      setFormData(prev => ({ ...prev, planName: '', cost: '' }));
     }
   };
 

@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Пути
-const jsonPath = path.join(__dirname, 'src/assets/services.json');
-const iconsDir = path.join(__dirname, 'src/assets/icons');
+const jsonPath = path.join(__dirname, '../assets/services.json');
+const iconsDir = path.join(__dirname, '../../public/icons');
 
 // Базовый эндпоинт CompanyEnrich Logo API
 // (Если API требует авторизации, вам нужно будет добавить заголовок Authorization в функцию fetch)
